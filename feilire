@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Event List</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; margin: 40px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th { cursor: pointer; background: #f2f2f2; }
+  input { padding: 5px; width: 200px; }
+</style>
+</head>
+<body>
+
+<h1>Upcoming Events</h1>
+<input class="search" placeholder="Filter events" />
+
+<div id="events">
+  <table>
+    <thead>
+      <tr>
+        <th class="sort" data-sort="name">Name</th>
+        <th class="sort" data-sort="date">Date</th>
+        <th class="sort" data-sort="location">Location</th>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <!-- Rows will be injected here -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+// Replace this with your published CSV URL
+const csvUrl = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:csv&sheet=Sheet1";
+
+// Fetch CSV and convert to table rows
+fetch(csvUrl)
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.split("\n").slice(1); // skip header
+    const tbody = document.querySelector(".list");
+    rows.forEach(row => {
+      const cols = row.split(",");
+      if (cols[3] && cols[3].toLowerCase() === "true") { // check Approved
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td class="name">${cols[0]}</td>
+                        <td class="date">${cols[1]}</td>
+                        <td class="location">${cols[2]}</td>`;
+        tbody.appendChild(tr);
+      }
+    });
+
+    // Initialize List.js
+    new List("events", {
+      valueNames: ["name", "date", "location"]
+    });
+  });
+</script>
+
+</body>
+</html>
