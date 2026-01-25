@@ -55,6 +55,14 @@
   Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
 </p>
 
+<label for="levelFilter">Scag leibhéal Gaeilge:</label>
+<select id="levelFilter" multiple>
+  <option value="Bonnleibhéal">Bonnleibhéal</option>
+  <option value="Meánleibhéal">Meánleibhéal</option>
+  <option value="Ardleibhéal">Ardleibhéal</option>
+</select>
+<button id="applyFilter">Scag</button>
+  
 <table id="events">
   <thead>
     <tr>
@@ -65,7 +73,6 @@
       <th>Leibhéal Gaeilge</th>
       <th>Aoisghrúpa</th>
       <th>Fáilte roimh</th>
-      <th>Tuilleadh sonraí</th>
     </tr>
   </thead>
   <tbody>
@@ -90,7 +97,8 @@
     .catch(err => {
       console.error("CSV load failed:", err);
     });
-function renderTable(rows) {
+  
+function renderTable(rows, levelFilter = []) {
   const tbody = document.querySelector("#events tbody");
   tbody.innerHTML = "";
 
@@ -102,8 +110,16 @@ function renderTable(rows) {
 
       if (!approved) return;
 
-      const tr = document.createElement("tr");
+      // If a level filter is applied, check if any level matches
+      if (levelFilter.length > 0) {
+        const levels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
+          .split(",")
+          .map(s => s.trim());
+        const hasMatch = levels.some(l => levelFilter.includes(l));
+        if (!hasMatch) return;
+      }
 
+      const tr = document.createElement("tr");
       const cell = v => (v === undefined || v === null ? "" : v);
 
       tr.innerHTML = `
@@ -114,7 +130,6 @@ function renderTable(rows) {
         <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
         <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
         <td>${cell(row["Fáilte roimh..?"])}</td>
-        <td>${cell(row["Tuilleadh sonraí"])}</td>
       `;
 
       tbody.appendChild(tr);
