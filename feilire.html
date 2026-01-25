@@ -5,7 +5,6 @@
   <title>Féilire Imeachtaí</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Simple styling -->
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -14,7 +13,7 @@
     }
 
     h1 {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .muted {
@@ -23,26 +22,31 @@
       margin-bottom: 1.5rem;
     }
 
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
     fieldset {
       border: 1px solid #ddd;
       padding: 0.8rem 1rem;
-      margin-bottom: 1rem;
-      max-width: 350px;
+      min-width: 260px;
     }
 
     legend {
       font-weight: bold;
     }
 
-    #levelFilter label {
-      display: inline-block;
-      margin-right: 1rem;
+    label {
+      display: block;
       font-weight: normal;
+      margin-bottom: 0.3rem;
     }
 
     button {
-      display: block;
-      margin-bottom: 2rem;
+      margin: 1rem 0 2rem 0;
       padding: 0.4rem 0.8rem;
       font-size: 1rem;
     }
@@ -69,7 +73,6 @@
     }
   </style>
 
-  <!-- PapaParse for CSV parsing -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 
@@ -80,13 +83,29 @@
   Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
 </p>
 
-<!-- Level filter using checkboxes -->
-<fieldset id="levelFilter">
-  <legend>Scag leibhéal Gaeilge:</legend>
-  <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
-  <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
-  <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
-</fieldset>
+<!-- Filters -->
+<div class="filters">
+
+  <!-- Level filter -->
+  <fieldset id="levelFilter">
+    <legend>Leibhéal Gaeilge</legend>
+    <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
+    <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
+    <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
+  </fieldset>
+
+  <!-- Age group filter -->
+  <fieldset id="ageFilter">
+    <legend>Aoisghrúpa</legend>
+    <label><input type="checkbox" value="Páistí réamhscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí réamhscoile</label>
+    <label><input type="checkbox" value="Páistí bunscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí bunscoile</label>
+    <label><input type="checkbox" value="Páistí meánscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí meánscoile</label>
+    <label><input type="checkbox" value="Daoine fásta"> Daoine fásta</label>
+    <label><input type="checkbox" value="Mic léinn amháin"> Mic léinn amháin</label>
+  </fieldset>
+
+</div>
+
 <button id="applyFilter">Scag</button>
 
 <table id="events">
@@ -101,58 +120,56 @@
       <th>Fáilte roimh</th>
     </tr>
   </thead>
-  <tbody>
-    <!-- Rows will be inserted here -->
-  </tbody>
+  <tbody></tbody>
 </table>
 
 <script>
-  // 🔴 Replace with your published CSV URL
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
+  const CSV_URL =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
 
-  let allRows = []; // store all CSV rows globally
+  let allRows = [];
 
-  // Fetch CSV and parse
   fetch(CSV_URL)
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
+    .then(res => res.text())
+    .then(csv => {
+      Papa.parse(csv, {
         header: true,
         skipEmptyLines: true,
-        complete: function(results) {
+        complete: results => {
           allRows = results.data;
-          renderTable(allRows); // initial render
+          renderTable(allRows);
         }
       });
-    })
-    .catch(err => {
-      console.error("CSV load failed:", err);
     });
 
-  // Render table with optional level filter
-  function renderTable(rows, levelFilter = []) {
+  function renderTable(rows, levelFilter = [], ageFilter = []) {
     const tbody = document.querySelector("#events tbody");
     tbody.innerHTML = "";
 
     rows.forEach(row => {
       try {
-        const approved =
-          row.Approved &&
-          row.Approved.toString().trim().toLowerCase() === "true";
+        if (!row.Approved || row.Approved.toString().trim().toLowerCase() !== "true") {
+          return;
+        }
 
-        if (!approved) return;
-
-        // Filter by levels if selected
+        // Level filtering
         if (levelFilter.length > 0) {
           const levels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
             .split(",")
             .map(s => s.trim());
-          const hasMatch = levels.some(l => levelFilter.includes(l));
-          if (!hasMatch) return;
+          if (!levels.some(l => levelFilter.includes(l))) return;
         }
 
+        // Age filtering
+        if (ageFilter.length > 0) {
+          const ages = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "")
+            .split(",")
+            .map(s => s.trim());
+          if (!ages.some(a => ageFilter.includes(a))) return;
+        }
+
+        const cell = v => (v ?? "");
         const tr = document.createElement("tr");
-        const cell = v => (v === undefined || v === null ? "" : v);
 
         tr.innerHTML = `
           <td>${cell(row["Teideal an imeachta"])}</td>
@@ -165,19 +182,22 @@
         `;
 
         tbody.appendChild(tr);
-      } catch (err) {
-        console.error("Row render failed:", row, err);
+      } catch (e) {
+        console.error("Render error:", row, e);
       }
     });
   }
 
-  // Hook up checkbox filter button
   document.getElementById("applyFilter").addEventListener("click", () => {
-    const checkboxes = document.querySelectorAll("#levelFilter input[type=checkbox]");
-    const selected = Array.from(checkboxes)
-                          .filter(cb => cb.checked)
-                          .map(cb => cb.value);
-    renderTable(allRows, selected);
+    const levelSelected = Array.from(
+      document.querySelectorAll("#levelFilter input:checked")
+    ).map(cb => cb.value);
+
+    const ageSelected = Array.from(
+      document.querySelectorAll("#ageFilter input:checked")
+    ).map(cb => cb.value);
+
+    renderTable(allRows, levelSelected, ageSelected);
   });
 </script>
 
