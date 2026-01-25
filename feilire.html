@@ -166,7 +166,10 @@ function renderTable(rows, levels=[], ages=[], areas=[]) {
   tbody.innerHTML = "";
 
   rows
-    .filter(r => r.Approved?.toLowerCase() === "true")
+    .filter(r =>
+  r.Approved &&
+  r.Approved.toString().trim().toLowerCase() === "true"
+)
     .sort((a,b)=>parseDateTime(a)-parseDateTime(b))
     .forEach(r => {
 
