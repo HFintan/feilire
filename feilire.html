@@ -1,136 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ga">
 <head>
-<meta charset="UTF-8">
-<title>Feilire - Event List</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
-<style>
-  body { font-family: Arial, sans-serif; margin: 40px; }
-  h1 { text-align: center; }
-  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-  th { cursor: pointer; background: #f2f2f2; }
-  .filters { margin-bottom: 20px; }
-  .filters select, .filters label { margin-right: 15px; }
-</style>
+  <meta charset="UTF-8">
+  <title>Féilire Imeachtaí</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Simple styling (intentionally plain) -->
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 2rem;
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.6rem;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f4f4f4;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+
+  <!-- PapaParse for correct CSV parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
+
 <body>
 
 <h1>Imeachtaí as Gaeilge i nGaillimh</h1>
+<p class="muted">
+  Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
+</p>
 
-<div class="filters">
-  <label>
-    Leibhéal Gaeilge:
-    <select id="levelFilter">
-      <option value="">Gach leibhéal</option>
-      <option value="Bonnleibhéal">Bonnleibhéal</option>
-      <option value="Meánleibhéal">Meánleibhéal</option>
-      <option value="Ardleibhéal">Ardleibhéal</option>
-    </select>
-  </label>
-
-  <label>
-    Fáilte roimh:
-    <select id="admissionFilter">
-      <option value="">Gach cineál</option>
-      <option value="Fáilte roimh chách">Fáilte roimh chách</option>
-      <option value="Chách, ach ticéad le ceannach / spás le cur in áirithe">Chách, ach ticéad</option>
-      <option value="Imeacht le haghaidh grúpa áirithe">Grúpa áirithe</option>
-    </select>
-  </label>
-
-  <label>Grúpa Aoise:</label>
-  <label><input type="checkbox" class="ageFilter" value="Páistí réamhscoile"> Réamhscoile</label>
-  <label><input type="checkbox" class="ageFilter" value="Páistí bunscoile"> Bunscoile</label>
-  <label><input type="checkbox" class="ageFilter" value="Páistí meánscoile"> Meánscoile</label>
-  <label><input type="checkbox" class="ageFilter" value="Daoine fásta"> Daoine fásta</label>
-  <label><input type="checkbox" class="ageFilter" value="Mic léinn amháin"> Mic léinn</label>
-</div>
-
-<div id="events">
-  <table>
-    <thead>
-      <tr>
-        <th class="sort" data-sort="title">Teideal</th>
-        <th class="sort" data-sort="date">Dáta</th>
-        <th class="sort" data-sort="time">Am</th>
-        <th class="sort" data-sort="location">Seoladh</th>
-        <th class="sort" data-sort="level">Leibhéal</th>
-        <th class="sort" data-sort="age">Grúpa Aoise</th>
-        <th class="sort" data-sort="admission">Fáilte roimh</th>
-        <th>Tuilleadh sonraí</th>
-      </tr>
-    </thead>
-    <tbody class="list">
-      <!-- Table rows will be injected here -->
-    </tbody>
-  </table>
-</div>
+<table id="events">
+  <thead>
+    <tr>
+      <th>Teideal</th>
+      <th>Dáta</th>
+      <th>Am</th>
+      <th>Seoladh</th>
+      <th>Leibhéal Gaeilge</th>
+      <th>Aoisghrúpa</th>
+      <th>Fáilte roimh</th>
+      <th>Tuilleadh sonraí</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Rows inserted here -->
+  </tbody>
+</table>
 
 <script>
-// Replace with your published CSV URL
-const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
+  // 🔴 PASTE YOUR PUBLISHED CSV URL HERE
+  const CSV_URL = "PASTE_CSV_URL_HERE";
 
-// Helper to parse CSV
-function csvToArray(str) {
-  const rows = str.trim().split("\n");
-  return rows.map(r => r.split(","));
-}
-
-// Fetch CSV and populate table
-fetch(csvUrl)
-  .then(res => res.text())
-  .then(csv => {
-    const data = csvToArray(csv);
-    const header = data[0];
-    const rows = data.slice(1);
-
-    const tbody = document.querySelector(".list");
-
-    rows.forEach(r => {
-      const approved = r[header.indexOf("Approved")]?.trim().toLowerCase() === "true";
-      if (!approved) return; // skip unapproved
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td class="title">${r[header.indexOf("Teideal an imeachta")]}</td>
-        <td class="date">${r[header.indexOf("Dáta an imeachta")]}</td>
-        <td class="time">${r[header.indexOf("Am an imeachta")]}</td>
-        <td class="location">${r[header.indexOf("Seoladh an imeachta")]}</td>
-        <td class="level">${r[header.indexOf("Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?")]}</td>
-        <td class="age">${r[header.indexOf("Imeacht oiriúnach do cén aoisghrúpa?")]}</td>
-        <td class="admission">${r[header.indexOf("Fáilte roimh..?")]}</td>
-        <td class="details">${r[header.indexOf("Tuilleadh sonraí")]}</td>
-      `;
-      tbody.appendChild(tr);
+  fetch(CSV_URL)
+    .then(response => response.text())
+    .then(csvText => {
+      Papa.parse(csvText, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          renderTable(results.data);
+        }
+      });
+    })
+    .catch(err => {
+      console.error("CSV load failed:", err);
     });
 
-    // Initialize List.js
-    const options = {
-      valueNames: ["title","date","time","location","level","age","admission"]
-    };
-    const eventList = new List("events", options);
+  function renderTable(rows) {
+    const tbody = document.querySelector("#events tbody");
+    tbody.innerHTML = "";
 
-    // Filter function
-    function applyFilters() {
-      const selectedLevel = document.getElementById("levelFilter").value;
-      const selectedAdmission = document.getElementById("admissionFilter").value;
-      const selectedAges = Array.from(document.querySelectorAll(".ageFilter:checked")).map(cb => cb.value);
+    rows.forEach(row => {
+      // Robust Approved check (string OR boolean)
+      const approved =
+        row.Approved &&
+        row.Approved.toString().trim().toLowerCase() === "true";
 
-      eventList.filter(item => {
-        const vals = item.values();
-        const matchLevel = !selectedLevel || vals.level === selectedLevel;
-        const matchAdmission = !selectedAdmission || vals.admission === selectedAdmission;
-        const matchAge = !selectedAges.length || selectedAges.some(age => vals.age.includes(age));
-        return matchLevel && matchAdmission && matchAge;
-      });
-    }
+      if (!approved) return;
 
-    // Attach filter events
-    document.getElementById("levelFilter").addEventListener("change", applyFilters);
-    document.getElementById("admissionFilter").addEventListener("change", applyFilters);
-    document.querySelectorAll(".ageFilter").forEach(cb => cb.addEventListener("change", applyFilters));
-  });
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${row["Teideal an imeachta"] || ""}</td>
+        <td>${row["Dáta an imeachta (MM/LL/BBBB)"] || ""}</td>
+        <td>${row["Am an imeachta"] || ""}</td>
+        <td>${row["Seoladh an imeachta"] || ""}</td>
+        <td>${row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || ""}</td>
+        <td>${row["Imeacht oiriúnach do cén aoisghrúpa?"] || ""}</td>
+        <td>${row["Fáilte roimh..?"] || ""}</td>
+        <td>${row["Tuilleadh sonraí"] || ""}</td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+  }
 </script>
 
 </body>
