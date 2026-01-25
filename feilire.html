@@ -90,14 +90,12 @@
     .catch(err => {
       console.error("CSV load failed:", err);
     });
+function renderTable(rows) {
+  const tbody = document.querySelector("#events tbody");
+  tbody.innerHTML = "";
 
-  function renderTable(rows) {
-      console.log("Parsed rows:", rows); // 👈 ADD THIS LINE TEMPORARILY
-    const tbody = document.querySelector("#events tbody");
-    tbody.innerHTML = "";
-
-    rows.forEach(row => {
-      // Robust Approved check (string OR boolean)
+  rows.forEach(row => {
+    try {
       const approved =
         row.Approved &&
         row.Approved.toString().trim().toLowerCase() === "true";
@@ -106,20 +104,25 @@
 
       const tr = document.createElement("tr");
 
+      const cell = v => (v === undefined || v === null ? "" : v);
+
       tr.innerHTML = `
-        <td>${row["Teideal an imeachta"] || ""}</td>
-        <td>${row["Dáta an imeachta (MM/LL/BBBB)"] || ""}</td>
-        <td>${row["Am an imeachta"] || ""}</td>
-        <td>${row["Seoladh an imeachta"] || ""}</td>
-        <td>${row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || ""}</td>
-        <td>${row["Imeacht oiriúnach do cén aoisghrúpa?"] || ""}</td>
-        <td>${row["Fáilte roimh..?"] || ""}</td>
-        <td>${row["Tuilleadh sonraí"] || ""}</td>
+        <td>${cell(row["Teideal an imeachta"])}</td>
+        <td>${cell(row["Dáta an imeachta (MM/LL/BBBB)"])}</td>
+        <td>${cell(row["Am an imeachta"])}</td>
+        <td>${cell(row["Seoladh an imeachta"])}</td>
+        <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
+        <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
+        <td>${cell(row["Fáilte roimh..?"])}</td>
+        <td>${cell(row["Tuilleadh sonraí"])}</td>
       `;
 
       tbody.appendChild(tr);
-    });
-  }
+    } catch (err) {
+      console.error("Row render failed:", row, err);
+    }
+  });
+}
 </script>
 
 </body>
