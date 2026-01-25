@@ -64,6 +64,17 @@ th {
 tr:nth-child(even) {
   background: #fafafa;
 }
+
+  #areaFilter {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  column-gap: 1rem;
+}
+
+#areaFilter legend {
+  grid-column: 1 / -1;
+}
+  
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
