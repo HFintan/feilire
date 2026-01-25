@@ -124,81 +124,104 @@
 </table>
 
 <script>
-  const CSV_URL =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
+const CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
 
-  let allRows = [];
+let allRows = [];
 
-  fetch(CSV_URL)
-    .then(res => res.text())
-    .then(csv => {
-      Papa.parse(csv, {
-        header: true,
-        skipEmptyLines: true,
-        complete: results => {
-          allRows = results.data;
-          renderTable(allRows);
-        }
-      });
-    });
-
-  function renderTable(rows, levelFilter = [], ageFilter = []) {
-    const tbody = document.querySelector("#events tbody");
-    tbody.innerHTML = "";
-
-    rows.forEach(row => {
-      try {
-        if (!row.Approved || row.Approved.toString().trim().toLowerCase() !== "true") {
-          return;
-        }
-
-        // Level filtering
-        if (levelFilter.length > 0) {
-          const levels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
-            .split(",")
-            .map(s => s.trim());
-          if (!levels.some(l => levelFilter.includes(l))) return;
-        }
-
-        // Age filtering
-        if (ageFilter.length > 0) {
-          const ages = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "")
-            .split(",")
-            .map(s => s.trim());
-          if (!ages.some(a => ageFilter.includes(a))) return;
-        }
-
-        const cell = v => (v ?? "");
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-          <td>${cell(row["Teideal an imeachta"])}</td>
-          <td>${cell(row["Dáta an imeachta (MM/LL/BBBB)"])}</td>
-          <td>${cell(row["Am an imeachta"])}</td>
-          <td>${cell(row["Seoladh an imeachta"])}</td>
-          <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
-          <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
-          <td>${cell(row["Fáilte roimh..?"])}</td>
-        `;
-
-        tbody.appendChild(tr);
-      } catch (e) {
-        console.error("Render error:", row, e);
+// Fetch CSV and parse
+fetch(CSV_URL)
+  .then(res => res.text())
+  .then(csv => {
+    Papa.parse(csv, {
+      header: true,
+      skipEmptyLines: true,
+      complete: results => {
+        allRows = results.data;
+        renderTable(allRows);
       }
     });
-  }
-
-  document.getElementById("applyFilter").addEventListener("click", () => {
-    const levelSelected = Array.from(
-      document.querySelectorAll("#levelFilter input:checked")
-    ).map(cb => cb.value);
-
-    const ageSelected = Array.from(
-      document.querySelectorAll("#ageFilter input:checked")
-    ).map(cb => cb.value);
-
-    renderTable(allRows, levelSelected, ageSelected);
   });
+
+// Format date from MM/DD/YYYY -> DD/MM/YYYY
+function formatDateUStoEU(usDate) {
+  if (!usDate) return "";
+  const parts = usDate.split("/");
+  if (parts.length !== 3) return usDate;
+  const [month, day, year] = parts;
+  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
+}
+
+// Parse date+time for sorting
+function parseEventDateTime(row) {
+  const dateStr = row["Dáta an imeachta (MM/LL/BBBB)"] || "";
+  const timeStr = row["Am an imeachta"] || "00:00";
+  const parts = dateStr.split("/");
+  if (parts.length !== 3) return new Date(9999,0,1);
+  const [month, day, year] = parts;
+  return new Date(`${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}T${timeStr}`);
+}
+
+// Render table with optional filters
+function renderTable(rows, levelFilter = [], ageFilter = []) {
+  const tbody = document.querySelector("#events tbody");
+  tbody.innerHTML = "";
+
+  // Clone and sort rows chronologically
+  const sortedRows = rows.slice().sort((a,b) => parseEventDateTime(a) - parseEventDateTime(b));
+
+  sortedRows.forEach(row => {
+    try {
+      if (!row.Approved || row.Approved.toString().trim().toLowerCase() !== "true") return;
+
+      // Level filter
+      if (levelFilter.length > 0) {
+        const levels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
+          .split(",")
+          .map(s => s.trim());
+        if (!levels.some(l => levelFilter.includes(l))) return;
+      }
+
+      // Age filter
+      if (ageFilter.length > 0) {
+        const ages = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "")
+          .split(",")
+          .map(s => s.trim());
+        if (!ages.some(a => ageFilter.includes(a))) return;
+      }
+
+      const cell = v => (v ?? "");
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${cell(row["Teideal an imeachta"])}</td>
+        <td>${formatDateUStoEU(cell(row["Dáta an imeachta (MM/LL/BBBB)"]))}</td>
+        <td>${cell(row["Am an imeachta"])}</td>
+        <td>${cell(row["Seoladh an imeachta"])}</td>
+        <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
+        <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
+        <td>${cell(row["Fáilte roimh..?"])}</td>
+      `;
+
+      tbody.appendChild(tr);
+    } catch (e) {
+      console.error("Render error:", row, e);
+    }
+  });
+}
+
+// Apply filter button
+document.getElementById("applyFilter").addEventListener("click", () => {
+  const levelSelected = Array.from(
+    document.querySelectorAll("#levelFilter input:checked")
+  ).map(cb => cb.value);
+
+  const ageSelected = Array.from(
+    document.querySelectorAll("#ageFilter input:checked")
+  ).map(cb => cb.value);
+
+  renderTable(allRows, levelSelected, ageSelected);
+});
 </script>
 
 </body>
