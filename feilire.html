@@ -142,7 +142,7 @@ function formatDate(us) {
 }
 
 function parseDateTime(row) {
-  const d = row["Dáta an imeachta (MM/LL/BBBB)"];
+  const d = row["Dáta an imeachta"];
   const t = row["Am an imeachta"] || "00:00";
   if (!d) return new Date(9999,0,1);
   const [m,da,y] = d.split("/");
@@ -176,7 +176,7 @@ function renderTable(rows, levels=[], ages=[], areas=[]) {
 
       tbody.insertAdjacentHTML("beforeend", `
         <tr>
-          <td>${formatDate(r["Dáta an imeachta (MM/LL/BBBB)"])}</td>
+          <td>${formatDate(r["Dáta an imeachta"])}</td>
           <td>${r["Teideal an imeachta"]||""}</td>
           <td>${r["Am an imeachta"]||""}</td>
           <td>${r["Seoladh an imeachta"]||""}</td>
