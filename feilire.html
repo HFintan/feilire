@@ -17,16 +17,27 @@
       margin-bottom: 1rem;
     }
 
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
+    .muted {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    fieldset {
+      border: 1px solid #ddd;
+      padding: 0.8rem 1rem;
+      margin-bottom: 1rem;
+      max-width: 350px;
+    }
+
+    legend {
       font-weight: bold;
     }
 
-    select {
-      width: 100%;
-      max-width: 300px;
-      margin-bottom: 1rem;
+    #levelFilter label {
+      display: inline-block;
+      margin-right: 1rem;
+      font-weight: normal;
     }
 
     button {
@@ -56,11 +67,6 @@
     tr:nth-child(even) {
       background: #fafafa;
     }
-
-    .muted {
-      color: #666;
-      font-size: 0.9rem;
-    }
   </style>
 
   <!-- PapaParse for CSV parsing -->
@@ -74,13 +80,13 @@
   Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
 </p>
 
-<!-- Level filter -->
-<label for="levelFilter">Scag leibhéal Gaeilge:</label>
-<select id="levelFilter" multiple>
-  <option value="Bonnleibhéal">Bonnleibhéal</option>
-  <option value="Meánleibhéal">Meánleibhéal</option>
-  <option value="Ardleibhéal">Ardleibhéal</option>
-</select>
+<!-- Level filter using checkboxes -->
+<fieldset id="levelFilter">
+  <legend>Scag leibhéal Gaeilge:</legend>
+  <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
+  <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
+  <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
+</fieldset>
 <button id="applyFilter">Scag</button>
 
 <table id="events">
@@ -101,7 +107,7 @@
 </table>
 
 <script>
-  // 🔴 Paste your published CSV URL here
+  // 🔴 Replace with your published CSV URL
   const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
 
   let allRows = []; // store all CSV rows globally
@@ -165,10 +171,12 @@
     });
   }
 
-  // Hook up filter button
+  // Hook up checkbox filter button
   document.getElementById("applyFilter").addEventListener("click", () => {
-    const select = document.getElementById("levelFilter");
-    const selected = Array.from(select.selectedOptions).map(o => o.value);
+    const checkboxes = document.querySelectorAll("#levelFilter input[type=checkbox]");
+    const selected = Array.from(checkboxes)
+                          .filter(cb => cb.checked)
+                          .map(cb => cb.value);
     renderTable(allRows, selected);
   });
 </script>
