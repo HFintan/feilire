@@ -5,7 +5,7 @@
   <title>Féilire Imeachtaí</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Simple styling (intentionally plain) -->
+  <!-- Simple styling -->
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -15,6 +15,25 @@
 
     h1 {
       margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    select {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      display: block;
+      margin-bottom: 2rem;
+      padding: 0.4rem 0.8rem;
+      font-size: 1rem;
     }
 
     table {
@@ -44,7 +63,7 @@
     }
   </style>
 
-  <!-- PapaParse for correct CSV parsing -->
+  <!-- PapaParse for CSV parsing -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 
@@ -55,6 +74,7 @@
   Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
 </p>
 
+<!-- Level filter -->
 <label for="levelFilter">Scag leibhéal Gaeilge:</label>
 <select id="levelFilter" multiple>
   <option value="Bonnleibhéal">Bonnleibhéal</option>
@@ -62,7 +82,7 @@
   <option value="Ardleibhéal">Ardleibhéal</option>
 </select>
 <button id="applyFilter">Scag</button>
-  
+
 <table id="events">
   <thead>
     <tr>
@@ -76,13 +96,17 @@
     </tr>
   </thead>
   <tbody>
-    <!-- Rows inserted here -->
+    <!-- Rows will be inserted here -->
   </tbody>
 </table>
 
 <script>
+  // 🔴 Paste your published CSV URL here
   const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
 
+  let allRows = []; // store all CSV rows globally
+
+  // Fetch CSV and parse
   fetch(CSV_URL)
     .then(response => response.text())
     .then(csvText => {
@@ -90,54 +114,63 @@
         header: true,
         skipEmptyLines: true,
         complete: function(results) {
-          renderTable(results.data);
+          allRows = results.data;
+          renderTable(allRows); // initial render
         }
       });
     })
     .catch(err => {
       console.error("CSV load failed:", err);
     });
-  
-function renderTable(rows, levelFilter = []) {
-  const tbody = document.querySelector("#events tbody");
-  tbody.innerHTML = "";
 
-  rows.forEach(row => {
-    try {
-      const approved =
-        row.Approved &&
-        row.Approved.toString().trim().toLowerCase() === "true";
+  // Render table with optional level filter
+  function renderTable(rows, levelFilter = []) {
+    const tbody = document.querySelector("#events tbody");
+    tbody.innerHTML = "";
 
-      if (!approved) return;
+    rows.forEach(row => {
+      try {
+        const approved =
+          row.Approved &&
+          row.Approved.toString().trim().toLowerCase() === "true";
 
-      // If a level filter is applied, check if any level matches
-      if (levelFilter.length > 0) {
-        const levels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
-          .split(",")
-          .map(s => s.trim());
-        const hasMatch = levels.some(l => levelFilter.includes(l));
-        if (!hasMatch) return;
+        if (!approved) return;
+
+        // Filter by levels if selected
+        if (levelFilter.length > 0) {
+          const levels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
+            .split(",")
+            .map(s => s.trim());
+          const hasMatch = levels.some(l => levelFilter.includes(l));
+          if (!hasMatch) return;
+        }
+
+        const tr = document.createElement("tr");
+        const cell = v => (v === undefined || v === null ? "" : v);
+
+        tr.innerHTML = `
+          <td>${cell(row["Teideal an imeachta"])}</td>
+          <td>${cell(row["Dáta an imeachta (MM/LL/BBBB)"])}</td>
+          <td>${cell(row["Am an imeachta"])}</td>
+          <td>${cell(row["Seoladh an imeachta"])}</td>
+          <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
+          <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
+          <td>${cell(row["Fáilte roimh..?"])}</td>
+        `;
+
+        tbody.appendChild(tr);
+      } catch (err) {
+        console.error("Row render failed:", row, err);
       }
+    });
+  }
 
-      const tr = document.createElement("tr");
-      const cell = v => (v === undefined || v === null ? "" : v);
-
-      tr.innerHTML = `
-        <td>${cell(row["Teideal an imeachta"])}</td>
-        <td>${cell(row["Dáta an imeachta (MM/LL/BBBB)"])}</td>
-        <td>${cell(row["Am an imeachta"])}</td>
-        <td>${cell(row["Seoladh an imeachta"])}</td>
-        <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
-        <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
-        <td>${cell(row["Fáilte roimh..?"])}</td>
-      `;
-
-      tbody.appendChild(tr);
-    } catch (err) {
-      console.error("Row render failed:", row, err);
-    }
+  // Hook up filter button
+  document.getElementById("applyFilter").addEventListener("click", () => {
+    const select = document.getElementById("levelFilter");
+    const selected = Array.from(select.selectedOptions).map(o => o.value);
+    renderTable(allRows, selected);
   });
-}
 </script>
 
 </body>
