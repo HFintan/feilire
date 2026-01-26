@@ -1,92 +1,97 @@
 <!DOCTYPE html>
 <html lang="ga">
 <head>
-<meta charset="UTF-8">
-<title>Féilire Imeachtaí</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Féilire Imeachtaí</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-body {
-  font-family: system-ui, sans-serif;
-  margin: 2rem;
-  line-height: 1.5;
-}
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 2rem;
+      line-height: 1.5;
+    }
 
-h1 { margin-bottom: 0.5rem; }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
 
-.muted {
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-}
+    .muted {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
 
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
 
-fieldset {
-  border: 1px solid #ddd;
-  padding: 0.8rem 1rem;
-  min-width: 260px;
-}
+    fieldset {
+      border: 1px solid #ddd;
+      padding: 0.8rem 1rem;
+      min-width: 220px;
+    }
 
-legend { font-weight: bold; }
+    legend {
+      font-weight: bold;
+    }
 
-label {
-  display: block;
-  margin-bottom: 0.3rem;
-}
+    label {
+      display: block;
+      font-weight: normal;
+      margin-bottom: 0.3rem;
+    }
 
-button {
-  margin: 1rem 0 2rem 0;
-  padding: 0.4rem 0.8rem;
-  font-size: 1rem;
-}
+    .ceantar-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.3rem;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+    button {
+      margin: 1rem 0 2rem 0;
+      padding: 0.4rem 0.8rem;
+      font-size: 1rem;
+    }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 0.6rem;
-  vertical-align: top;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
 
-th {
-  background: #f4f4f4;
-  text-align: left;
-}
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.6rem;
+      vertical-align: top;
+    }
 
-tr:nth-child(even) {
-  background: #fafafa;
-}
+    th {
+      background: #f4f4f4;
+      text-align: left;
+    }
 
-  #areaFilter {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
-  column-gap: 1rem;
-}
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+  </style>
 
-#areaFilter legend {
-  grid-column: 1 / -1;
-}
-  
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 
 <body>
 
 <h1>Imeachtaí as Gaeilge i nGaillimh</h1>
-<p class="muted">Imeachtaí ceadaithe amháin.</p>
+<p class="muted">
+  Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
+</p>
 
 <div class="filters">
 
+  <!-- Level filter -->
   <fieldset id="levelFilter">
     <legend>Leibhéal Gaeilge</legend>
     <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
@@ -94,145 +99,160 @@ tr:nth-child(even) {
     <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
   </fieldset>
 
+  <!-- Age group filter -->
   <fieldset id="ageFilter">
     <legend>Aoisghrúpa</legend>
     <label><input type="checkbox" value="Páistí réamhscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí réamhscoile</label>
     <label><input type="checkbox" value="Páistí bunscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí bunscoile</label>
     <label><input type="checkbox" value="Páistí meánscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí meánscoile</label>
     <label><input type="checkbox" value="Daoine fásta"> Daoine fásta</label>
-    <label><input type="checkbox" value="Mic léinn"> Mic léinn</label>
+    <label><input type="checkbox" value="Mic léinn amháin"> Mic léinn amháin</label>
   </fieldset>
 
-<fieldset id="areaFilter">
-  <legend>Ceantar</legend>
-
-  <label><input type="checkbox" value="Baile Átha an Rí"> Baile Átha an Rí</label>
-  <label><input type="checkbox" value="Baile Locha Riach"> Baile Locha Riach</label>
-  <label><input type="checkbox" value="Bearna agus Cnoc na Cathrach"> Bearna agus Cnoc na Cathrach</label>
-  <label><input type="checkbox" value="Cathair na Gaillimhe"> Cathair na Gaillimhe</label>
-  <label><input type="checkbox" value="Ceantar na nOileán"> Ceantar na nOileán</label>
-  <label><input type="checkbox" value="An Cheathrú Rua"> An Cheathrú Rua</label>
-  <label><input type="checkbox" value="An Clochán"> An Clochán</label>
-  <label><input type="checkbox" value="Cois Fharraige"> Cois Fharraige</label>
-  <label><input type="checkbox" value="Conamara Láir"> Conamara Láir</label>
-  <label><input type="checkbox" value="Conamara Thuaidh"> Conamara Thuaidh</label>
-  <label><input type="checkbox" value="Corr na Móna"> Corr na Móna</label>
-  <label><input type="checkbox" value="Dúiche Sheoigheach agus Tuar Mhic Éadaigh">
-    Dúiche Sheoigheach agus Tuar Mhic Éadaigh
-  </label>
-  <label><input type="checkbox" value="An tEachréidh"> An tEachréidh</label>
-  <label><input type="checkbox" value="Maigh Cuilinn"> Maigh Cuilinn</label>
-  <label><input type="checkbox" value="Oileáin Árann"> Oileáin Árann</label>
-  <label><input type="checkbox" value="Oirthear Chathair na Gaillimhe">
-    Oirthear Chathair na Gaillimhe
-  </label>
-  <label><input type="checkbox" value="Ollscoil na Gaillimhe"> Ollscoil na Gaillimhe</label>
-  <label><input type="checkbox" value="Tuaim"> Tuaim</label>
-  <label><input type="checkbox" value="Eile"> Eile</label>
-</fieldset>
-
+  <!-- Ceantar filter -->
+  <fieldset id="ceantarFilter">
+    <legend>Ceantar</legend>
+    <div class="ceantar-options">
+      <label><input type="checkbox" value="Baile Átha an Rí"> Baile Átha an Rí</label>
+      <label><input type="checkbox" value="Baile Locha Riach"> Baile Locha Riach</label>
+      <label><input type="checkbox" value="Bearna agus Cnoc na Cathrach"> Bearna & Cnoc na Cathrach</label>
+      <label><input type="checkbox" value="Cathair na Gaillimhe"> Cathair na Gaillimhe</label>
+      <label><input type="checkbox" value="Ceantar na nOileán"> Ceantar na nOileán</label>
+      <label><input type="checkbox" value="An Cheathrú Rua"> An Cheathrú Rua</label>
+      <label><input type="checkbox" value="An Clochán"> An Clochán</label>
+      <label><input type="checkbox" value="Cois Fharraige"> Cois Fharraige</label>
+      <label><input type="checkbox" value="Conamara Láir"> Conamara Láir</label>
+      <label><input type="checkbox" value="Conamara Thuaidh"> Conamara Thuaidh</label>
+      <label><input type="checkbox" value="Corr na Móna"> Corr na Móna</label>
+      <label><input type="checkbox" value="Dúiche Sheoigheach agus Tuar Mhic Éadaigh"> Dúiche Sheoigheach & Tuar Mhic Éadaigh</label>
+      <label><input type="checkbox" value="An tEachréidh"> An tEachréidh</label>
+      <label><input type="checkbox" value="Maigh Cuilinn"> Maigh Cuilinn</label>
+      <label><input type="checkbox" value="Oileáin Árann"> Oileáin Árann</label>
+      <label><input type="checkbox" value="Oirthear Chathair na Gaillimhe"> Oirthear Chathair na Gaillimhe</label>
+      <label><input type="checkbox" value="Ollscoil na Gaillimhe"> Ollscoil na Gaillimhe</label>
+      <label><input type="checkbox" value="Tuaim"> Tuaim</label>
+      <label><input type="checkbox" value="Eile"> Eile</label>
+    </div>
+  </fieldset>
 
 </div>
 
 <button id="applyFilter">Scag</button>
 
 <table id="events">
-<thead>
-<tr>
-  <th>Teideal</th>
-  <th>Dáta</th>
-  <th>Am</th>
-  <th>Seoladh</th>
-  <th>Ceantar</th>
-  <th>Leibhéal Gaeilge</th>
-  <th>Aoisghrúpa</th>
-  <th>Fáilte roimh</th>
-  <th>Tuilleadh eolais</th>
-</tr>
-</thead>
-<tbody></tbody>
+  <thead>
+    <tr>
+      <th>Dáta</th>
+      <th>Teideal</th>
+      <th>Am</th>
+      <th>Seoladh</th>
+      <th>Ceantar</th>
+      <th>Leibhéal Gaeilge</th>
+      <th>Aoisghrúpa</th>
+      <th>Fáilte roimh</th>
+      <th>Tuilleadh eolais</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
 </table>
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
+
 let allRows = [];
 
+// Fetch CSV
 fetch(CSV_URL)
-  .then(r => r.text())
+  .then(res => res.text())
   .then(csv => {
     Papa.parse(csv, {
       header: true,
       skipEmptyLines: true,
-      complete: res => {
-        allRows = res.data;
+      complete: results => {
+        allRows = results.data;
         renderTable(allRows);
       }
     });
-  });
+  })
+  .catch(err => console.error("CSV fetch error:", err));
 
-// Convert MM/DD/YYYY (Google Form default) → DD/MM/YYYY
+// Format date from MM/DD/YYYY -> DD/MM/YYYY
 function formatDateUStoEU(usDate) {
   if (!usDate) return "";
   const parts = usDate.split("/");
-  if (parts.length !== 3) return usDate; // fallback if not valid
+  if (parts.length !== 3) return usDate;
   const [month, day, year] = parts;
-  // Pad day/month in case single digit
   return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
 }
 
-function parseDateTime(row) {
-  const d = row["Dáta an imeachta"];
-  const t = row["Am an imeachta"] || "00:00";
-  if (!d) return new Date(9999,0,1);
-  const [m,da,y] = d.split("/");
-  return new Date(`${y}-${m}-${da}T${t}`);
+// Parse date+time for sorting
+function parseEventDateTime(row) {
+  const dateStr = row["Dáta an imeachta"] || "";
+  const timeStr = row["Am an imeachta"] || "00:00";
+  const parts = dateStr.split("/");
+  if (parts.length !== 3) return new Date(9999,0,1);
+  const [day, month, year] = parts;
+  return new Date(`${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}T${timeStr}`);
 }
 
-
-function renderTable(rows, levels=[], ages=[], areas=[]) {
+// Render table with optional filters
+function renderTable(rows, levels = [], ages = [], areas = []) {
   const tbody = document.querySelector("#events tbody");
   tbody.innerHTML = "";
 
-  rows
-    .filter(r =>
-  r.Approved &&
-  r.Approved.toString().trim().toLowerCase() === "true"
-)
-    .sort((a,b)=>parseDateTime(a)-parseDateTime(b))
-    .forEach(r => {
+  // Sort chronologically
+  const sortedRows = rows.slice().sort((a,b) => parseEventDateTime(a) - parseEventDateTime(b));
 
-      if (levels.length && !r["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"]?.split(",").map(s=>s.trim()).some(l=>levels.includes(l))) return;
-      if (ages.length && !r["Imeacht oiriúnach do cén aoisghrúpa?"]?.split(",").map(s=>s.trim()).some(a=>ages.includes(a))) return;
-if (areas.length > 0) {
-  const ceantar = (r.Ceantar || "").trim();
-  if (!areas.includes(ceantar)) return;
-}
+  sortedRows.forEach(row => {
+    try {
+      if (!row.Approved || row.Approved.toString().trim().toLowerCase() !== "true") return;
 
+      // Level filter
+      if (levels.length > 0) {
+        const rowLevels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "").split(",").map(s => s.trim());
+        if (!rowLevels.some(l => levels.includes(l))) return;
+      }
+
+      // Age filter
+      if (ages.length > 0) {
+        const rowAges = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "").split(",").map(s => s.trim());
+        if (!rowAges.some(a => ages.includes(a))) return;
+      }
+
+      // Ceantar filter
+      if (areas.length > 0) {
+        const ceantar = (row["Ceantar"] || "").trim();
+        if (!areas.includes(ceantar)) return;
+      }
+
+      const cell = v => (v ?? "");
       tbody.insertAdjacentHTML("beforeend", `
         <tr>
-          <td>${formatDateUStoEU(cell(r["Dáta an imeachta"]))}</td>          
-          <td>${r["Teideal an imeachta"]||""}</td>
-          <td>${r["Am an imeachta"]||""}</td>
-          <td>${r["Seoladh an imeachta"]||""}</td>
-          <td>${r.Ceantar||""}</td>
-          <td>${r["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"]||""}</td>
-          <td>${r["Imeacht oiriúnach do cén aoisghrúpa?"]||""}</td>
-          <td>${r["Fáilte roimh..?"]||""}</td>
-          <td>${r["Tuilleadh eolais"]||""}</td>
+          <td>${formatDateUStoEU(cell(row["Dáta an imeachta"]))}</td>
+          <td>${cell(row["Teideal an imeachta"])}</td>
+          <td>${cell(row["Am an imeachta"])}</td>
+          <td>${cell(row["Seoladh an imeachta"])}</td>
+          <td>${cell(row["Ceantar"])}</td>
+          <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
+          <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
+          <td>${cell(row["Fáilte roimh..?"])}</td>
+          <td>${cell(row["Tuilleadh eolais"])}</td>
         </tr>
       `);
-    });
+
+    } catch(e) {
+      console.error("Render error:", row, e);
+    }
+  });
 }
 
-document.getElementById("applyFilter").onclick = () => {
-  const get = sel => [...document.querySelectorAll(sel+":checked")].map(x=>x.value);
-  renderTable(
-    allRows,
-    get("#levelFilter input"),
-    get("#ageFilter input"),
-    get("#areaFilter input")
-  );
-};
+// Apply filters
+document.getElementById("applyFilter").addEventListener("click", () => {
+  const levels = Array.from(document.querySelectorAll("#levelFilter input:checked")).map(cb => cb.value);
+  const ages = Array.from(document.querySelectorAll("#ageFilter input:checked")).map(cb => cb.value);
+  const areas = Array.from(document.querySelectorAll("#ceantarFilter input:checked")).map(cb => cb.value);
+  renderTable(allRows, levels, ages, areas);
+});
 </script>
 
 </body>
