@@ -139,14 +139,15 @@ tr:nth-child(even) {
 <table id="events">
 <thead>
 <tr>
-  <th>Dáta</th>
   <th>Teideal</th>
+  <th>Dáta</th>
   <th>Am</th>
   <th>Seoladh</th>
   <th>Ceantar</th>
   <th>Leibhéal Gaeilge</th>
   <th>Aoisghrúpa</th>
   <th>Fáilte roimh</th>
+  <th>Tuilleadh eolais</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -213,6 +214,7 @@ if (areas.length > 0) {
           <td>${r["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"]||""}</td>
           <td>${r["Imeacht oiriúnach do cén aoisghrúpa?"]||""}</td>
           <td>${r["Fáilte roimh..?"]||""}</td>
+          <td>${r["Tuilleadh eolais"]||""}</td>
         </tr>
       `);
     });
