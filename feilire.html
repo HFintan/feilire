@@ -227,18 +227,18 @@ function renderTable(rows, levels = [], ages = [], areas = []) {
 
       const cell = v => (v ?? "");
       tbody.insertAdjacentHTML("beforeend", `
-        <tr>
-          <td>${formatDateUStoEU(cell(row["Dáta an imeachta"]))}</td>
-          <td>${cell(row["Teideal an imeachta"])}</td>
-          <td>${cell(row["Am an imeachta"])}</td>
-          <td>${cell(row["Seoladh an imeachta"])}</td>
-          <td>${cell(row["Ceantar"])}</td>
-          <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
-          <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
-          <td>${cell(row["Fáilte roimh..?"])}</td>
-          <td>${cell(row["Tuilleadh eolais"])}</td>
-        </tr>
-      `);
+  <tr>
+    <td>${formatDateUStoEU(cell(row["Dáta an imeachta"]))}</td>          
+    <td>${cell(row["Teideal an imeachta"])}</td>
+    <td>${cell(row["Am an imeachta"])}</td>
+    <td>${cell(row["Seoladh an imeachta"])}</td>
+    <td>${cell(row["Ceantar"])}</td>
+    <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
+    <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
+    <td>${cell(row["Fáilte roimh..?"])}</td>
+    <td>${cell(row["Tuilleadh Eolais"])}</td>
+  </tr>
+`);
 
     } catch(e) {
       console.error("Render error:", row, e);
