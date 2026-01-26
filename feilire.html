@@ -170,10 +170,14 @@ fetch(CSV_URL)
     });
   });
 
-function formatDate(us) {
-  if (!us) return "";
-  const [m,d,y] = us.split("/");
-  return `${d.padStart(2,"0")}/${m.padStart(2,"0")}/${y}`;
+// Convert MM/DD/YYYY (Google Form default) → DD/MM/YYYY
+function formatDateUStoEU(usDate) {
+  if (!usDate) return "";
+  const parts = usDate.split("/");
+  if (parts.length !== 3) return usDate; // fallback if not valid
+  const [month, day, year] = parts;
+  // Pad day/month in case single digit
+  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
 }
 
 function parseDateTime(row) {
@@ -206,7 +210,7 @@ if (areas.length > 0) {
 
       tbody.insertAdjacentHTML("beforeend", `
         <tr>
-          <td>${formatDate(r["Dáta an imeachta"])}</td>
+          <td>${formatDateUStoEU(cell(row["Dáta an imeachta"]))}</td>          
           <td>${r["Teideal an imeachta"]||""}</td>
           <td>${r["Am an imeachta"]||""}</td>
           <td>${r["Seoladh an imeachta"]||""}</td>
