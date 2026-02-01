@@ -166,10 +166,19 @@ function formatDateUStoEU(usDate) {
 function normalizeTime(value) {
   if (!value) return "";
 
+  // If PapaParse gave us a Date object
+  if (value instanceof Date && !isNaN(value)) {
+    const hours = value.getHours();
+    const minutes = value.getMinutes();
+    return `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}`;
+  }
+
+  // If already a time string
   if (typeof value === "string" && value.includes(":")) {
     return value;
   }
 
+  // Spreadsheet numeric time (fraction of a day)
   const num = Number(value);
   if (!isNaN(num)) {
     const totalMinutes = Math.round(num * 24 * 60);
