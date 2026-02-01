@@ -41,7 +41,6 @@
 
     label {
       display: block;
-      font-weight: normal;
       margin-bottom: 0.3rem;
     }
 
@@ -91,7 +90,6 @@
 
 <div class="filters">
 
-  <!-- Level filter -->
   <fieldset id="levelFilter">
     <legend>Leibhéal Gaeilge</legend>
     <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
@@ -99,7 +97,6 @@
     <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
   </fieldset>
 
-  <!-- Age group filter -->
   <fieldset id="ageFilter">
     <legend>Aoisghrúpa</legend>
     <label><input type="checkbox" value="Páistí réamhscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí réamhscoile</label>
@@ -109,7 +106,6 @@
     <label><input type="checkbox" value="Mic léinn amháin"> Mic léinn amháin</label>
   </fieldset>
 
-  <!-- Ceantar filter -->
   <fieldset id="ceantarFilter">
     <legend>Ceantar</legend>
     <div class="ceantar-options">
@@ -146,10 +142,6 @@
       <th>Teideal</th>
       <th>Am</th>
       <th>Seoladh</th>
-      <th>Ceantar</th>
-      <th>Leibhéal Gaeilge</th>
-      <th>Aoisghrúpa</th>
-      <th>Fáilte roimh</th>
       <th>Tuilleadh eolais</th>
     </tr>
   </thead>
@@ -161,7 +153,47 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNc
 
 let allRows = [];
 
-// Fetch CSV
+/* ---------- Helpers ---------- */
+
+function formatDateUStoEU(usDate) {
+  if (!usDate) return "";
+  const parts = usDate.split("/");
+  if (parts.length !== 3) return usDate;
+  const [month, day, year] = parts;
+  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
+}
+
+function normalizeTime(value) {
+  if (!value) return "";
+
+  if (typeof value === "string" && value.includes(":")) {
+    return value;
+  }
+
+  const num = Number(value);
+  if (!isNaN(num)) {
+    const totalMinutes = Math.round(num * 24 * 60);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}`;
+  }
+
+  return "";
+}
+
+function parseEventDateTime(row) {
+  const dateStr = row["Dáta an imeachta"] || "";
+  const timeStr = normalizeTime(row["Am an imeachta"]) || "00:00";
+
+  const parts = dateStr.split("/");
+  if (parts.length !== 3) return new Date(9999,0,1);
+
+  const [day, month, year] = parts;
+  return new Date(`${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}T${timeStr}`);
+}
+
+/* ---------- Fetch CSV ---------- */
+
 fetch(CSV_URL)
   .then(res => res.text())
   .then(csv => {
@@ -173,80 +205,52 @@ fetch(CSV_URL)
         renderTable(allRows);
       }
     });
-  })
-  .catch(err => console.error("CSV fetch error:", err));
+  });
 
-// Format date from MM/DD/YYYY -> DD/MM/YYYY
-function formatDateUStoEU(usDate) {
-  if (!usDate) return "";
-  const parts = usDate.split("/");
-  if (parts.length !== 3) return usDate;
-  const [month, day, year] = parts;
-  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
-}
+/* ---------- Render ---------- */
 
-// Parse date+time for sorting
-function parseEventDateTime(row) {
-  const dateStr = row["Dáta an imeachta"] || "";
-  const timeStr = row["Am an imeachta"] || "00:00";
-  const parts = dateStr.split("/");
-  if (parts.length !== 3) return new Date(9999,0,1);
-  const [day, month, year] = parts;
-  return new Date(`${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}T${timeStr}`);
-}
-
-// Render table with optional filters
 function renderTable(rows, levels = [], ages = [], areas = []) {
   const tbody = document.querySelector("#events tbody");
   tbody.innerHTML = "";
 
-  // Sort chronologically
-  const sortedRows = rows.slice().sort((a,b) => parseEventDateTime(a) - parseEventDateTime(b));
+  const sortedRows = rows.slice().sort(
+    (a,b) => parseEventDateTime(a) - parseEventDateTime(b)
+  );
 
   sortedRows.forEach(row => {
-    try {
-      if (!row.Approved || row.Approved.toString().trim().toLowerCase() !== "true") return;
 
-      // Level filter
-      if (levels.length > 0) {
-        const rowLevels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "").split(",").map(s => s.trim());
-        if (!rowLevels.some(l => levels.includes(l))) return;
-      }
+    if (!row.Approved || row.Approved.toString().toLowerCase().trim() !== "true") return;
 
-      // Age filter
-      if (ages.length > 0) {
-        const rowAges = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "").split(",").map(s => s.trim());
-        if (!rowAges.some(a => ages.includes(a))) return;
-      }
-
-      // Ceantar filter
-      if (areas.length > 0) {
-        const ceantar = (row["Ceantar"] || "").trim();
-        if (!areas.includes(ceantar)) return;
-      }
-
-      const cell = v => (v ?? "");
-      tbody.insertAdjacentHTML("beforeend", `
-  <tr>
-    <td>${formatDateUStoEU(cell(row["Dáta an imeachta"]))}</td>          
-    <td>${cell(row["Teideal an imeachta"])}</td>
-    <td>${cell(row["Am an imeachta"])}</td>
-    <td>${cell(row["Seoladh an imeachta"])}</td>
-    <td>${cell(row["Ceantar"])}</td>
-    <td>${cell(row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"])}</td>
-    <td>${cell(row["Imeacht oiriúnach do cén aoisghrúpa?"])}</td>
-    <td>${cell(row["Fáilte roimh..?"])}</td>
-    <td>${cell(row["Tuilleadh Eolais"])}</td>
-  </tr>
-`);
-
-    } catch(e) {
-      console.error("Render error:", row, e);
+    if (levels.length > 0) {
+      const rowLevels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
+        .split(",").map(s => s.trim());
+      if (!rowLevels.some(l => levels.includes(l))) return;
     }
+
+    if (ages.length > 0) {
+      const rowAges = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "")
+        .split(",").map(s => s.trim());
+      if (!rowAges.some(a => ages.includes(a))) return;
+    }
+
+    if (areas.length > 0) {
+      if (!areas.includes((row["Ceantar"] || "").trim())) return;
+    }
+
+    tbody.insertAdjacentHTML("beforeend", `
+      <tr>
+        <td>${formatDateUStoEU(row["Dáta an imeachta"])}</td>
+        <td>${row["Teideal an imeachta"] || ""}</td>
+        <td>${normalizeTime(row["Am an imeachta"])}</td>
+        <td>${row["Seoladh an imeachta"] || ""}</td>
+        <td>${row["Tuilleadh Eolais"] || ""}</td>
+      </tr>
+    `);
   });
 }
 
-// Apply filters
+/* ---------- Apply filters ---------- */
+
 document.getElementById("applyFilter").addEventListener("click", () => {
   const levels = Array.from(document.querySelectorAll("#levelFilter input:checked")).map(cb => cb.value);
   const ages = Array.from(document.querySelectorAll("#ageFilter input:checked")).map(cb => cb.value);
