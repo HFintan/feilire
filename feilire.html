@@ -227,8 +227,9 @@ function renderTable(rows, levels = [], ages = [], areas = []) {
     (a,b) => parseEventDateTime(a) - parseEventDateTime(b)
   );
 
-  console.log(row["Am an imeachta"], normalizeTime(row["Am an imeachta"]));
   sortedRows.forEach(row => {
+      console.log(row["Am an imeachta"], normalizeTime(row["Am an imeachta"]));
+
 
     if (!row.Approved || row.Approved.toString().toLowerCase().trim() !== "true") return;
 
