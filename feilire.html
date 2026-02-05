@@ -6,30 +6,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
+    /* ---------- Body & Container ---------- */
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.5;
-      background: #fff;
+      background: linear-gradient(160deg, #f0f8ff 0%, #e6f7ff 100%);
+      margin: 0;
+      padding: 0;
     }
 
     .container {
       max-width: 1100px;
       margin: 2rem auto;
       padding: 0 1rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding-bottom: 2rem;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin: 2rem 0 0.5rem;
+      color: #004080;
     }
 
     .muted {
+      text-align: center;
       color: #666;
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
-      text-align: center;
     }
 
+    /* ---------- Filters ---------- */
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -42,21 +51,26 @@
       border: 1px solid #ddd;
       padding: 0.8rem 1rem;
       min-width: 220px;
+      border-radius: 6px;
+      background: #f9f9f9;
     }
 
     legend {
       font-weight: bold;
+      color: #004080;
     }
 
     label {
       display: block;
       margin-bottom: 0.3rem;
+      cursor: pointer;
     }
 
     select {
       width: 100%;
       padding: 0.4rem;
       font-size: 1rem;
+      border-radius: 4px;
     }
 
     .actions {
@@ -65,15 +79,26 @@
     }
 
     button {
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1.2rem;
       font-size: 1rem;
       cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background-color: #004080;
+      color: #fff;
+      transition: background-color 0.2s;
     }
 
+    button:hover {
+      background-color: #0066cc;
+    }
+
+    /* ---------- Table ---------- */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+      font-size: 0.95rem;
     }
 
     th, td {
@@ -81,16 +106,19 @@
       padding: 0.6rem;
       vertical-align: top;
       text-align: left;
+      word-break: break-word;
     }
 
     th {
       background: #f4f4f4;
+      color: #004080;
     }
 
     tr:nth-child(even) {
       background: #fafafa;
     }
 
+    /* ---------- Form iframe ---------- */
     .form-wrapper {
       margin-top: 3rem;
       width: 100%;
@@ -100,6 +128,20 @@
       width: 100%;
       min-height: 80vh;
       border: none;
+      border-radius: 6px;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 600px) {
+      .filters {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      fieldset {
+        width: 100%;
+        max-width: 320px;
+      }
     }
   </style>
 
@@ -107,17 +149,16 @@
 </head>
 
 <body>
-
 <div class="container">
 
   <h1>Imeachtaí as Gaeilge i nGaillimh</h1>
   <p class="muted">
-    Is féidir imeacht a chlárú leis an bhfoirm ag bun an leathanaigh.<br><br>
-    <i>Ní ghlacfar le freagracht as aon chur amú ama ná airgid, gortú nó bás, argóintí nó croíthe briste ag eascairt ó bhotúin ar bith sa liosta thíos.</i>
+    Is féidir imeacht a chlárú leis an bhfoirm ag bun an leathanaigh.<br>
+    <i>Ní ghlacfar freagracht as aon chur amú ama, airgid, gortú nó bás, argóintí nó croíthe briste ag eascairt ó bhotúin ar bith sa liosta thíos.</i>
   </p>
 
+  <!-- Filters -->
   <div class="filters">
-
     <fieldset id="levelFilter">
       <legend>Leibhéal Gaeilge</legend>
       <label><input type="checkbox" value="Dátheangach"> Dátheangach</label>
@@ -159,13 +200,14 @@
         <option>Eile</option>
       </select>
     </fieldset>
-
   </div>
 
+  <!-- Apply Filter -->
   <div class="actions">
     <button id="applyFilter">Scag</button>
   </div>
 
+  <!-- Events Table -->
   <table id="events">
     <thead>
       <tr>
@@ -179,6 +221,7 @@
     <tbody></tbody>
   </table>
 
+  <!-- Google Form -->
   <div class="form-wrapper">
     <iframe
       src="https://docs.google.com/forms/d/e/1FAIpQLSee8lpy1NaWNO3F6Cmm5YiIx-9UuZzd9gtgzOsnvk_0OYbIGQ/viewform?embedded=true"
@@ -195,11 +238,10 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNc
 
 let allRows = [];
 
+/* ---------- Helpers ---------- */
 function normalizeTime(value) {
   if (!value) return "";
-  if (typeof value === "string" && /^\d{1,2}:\d{2}/.test(value)) {
-    return value.slice(0,5);
-  }
+  if (typeof value === "string" && /^\d{1,2}:\d{2}/.test(value)) return value.slice(0,5);
   const num = Number(value);
   if (!isNaN(num)) {
     const totalMinutes = Math.round(num * 24 * 60);
@@ -216,6 +258,15 @@ function parseEventDateTime(row) {
   return new Date(`${d[2]}-${d[1]}-${d[0]}T${normalizeTime(row["Am an imeachta"]) || "00:00"}`);
 }
 
+function formatDateEU(usDate) {
+  if (!usDate) return "";
+  const parts = usDate.split("/");
+  if (parts.length !== 3) return usDate;
+  const [month, day, year] = parts;
+  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
+}
+
+/* ---------- Fetch CSV ---------- */
 fetch(CSV_URL)
   .then(r => r.text())
   .then(csv => {
@@ -224,12 +275,13 @@ fetch(CSV_URL)
       skipEmptyLines: true,
       complete: res => {
         allRows = res.data;
-        renderTable(allRows);
+        renderTable();
       }
     });
   });
 
-function renderTable(rows) {
+/* ---------- Render Table ---------- */
+function renderTable() {
   const tbody = document.querySelector("#events tbody");
   tbody.innerHTML = "";
 
@@ -237,11 +289,10 @@ function renderTable(rows) {
   const ages = Array.from(document.querySelectorAll("#ageFilter input:checked")).map(i => i.value);
   const area = document.getElementById("ceantarSelect").value;
 
-  rows
+  allRows
     .slice()
     .sort((a,b) => parseEventDateTime(a) - parseEventDateTime(b))
     .forEach(row => {
-
       if (row.Approved?.toLowerCase?.() !== "true") return;
 
       if (levels.length) {
@@ -256,13 +307,16 @@ function renderTable(rows) {
 
       if (area && area !== (row["Ceantar"] || "").trim()) return;
 
+      // Escape user-submitted links
+      const safeText = s => String(s || "").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
       tbody.insertAdjacentHTML("beforeend", `
         <tr>
-          <td>${row["Dáta an imeachta"] || ""}</td>
-          <td>${row["Teideal an imeachta"] || ""}</td>
+          <td>${formatDateEU(row["Dáta an imeachta"])}</td>
+          <td>${safeText(row["Teideal an imeachta"])}</td>
           <td>${normalizeTime(row["Am an imeachta"])}</td>
-          <td>${row["Seoladh an imeachta"] || ""}</td>
-          <td>${row["Tuilleadh Eolais"] || ""}</td>
+          <td>${safeText(row["Seoladh an imeachta"])}</td>
+          <td>${safeText(row["Tuilleadh Eolais"])}</td>
         </tr>
       `);
     });
@@ -272,8 +326,8 @@ function renderTable(rows) {
   }
 }
 
-document.getElementById("applyFilter").addEventListener("click", () => renderTable(allRows));
+/* ---------- Apply Filters ---------- */
+document.getElementById("applyFilter").addEventListener("click", renderTable);
 </script>
-
 </body>
 </html>
