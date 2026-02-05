@@ -120,6 +120,7 @@
 
     <fieldset id="levelFilter">
       <legend>Leibhéal Gaeilge</legend>
+      <label><input type="checkbox" value="Dátheangach"> Dátheangach</label>
       <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
       <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
       <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
@@ -154,7 +155,6 @@
         <option>Maigh Cuilinn</option>
         <option>Oileáin Árann</option>
         <option>Oirthear Chathair na Gaillimhe</option>
-        <option>Ollscoil na Gaillimhe</option>
         <option>Tuaim</option>
         <option>Eile</option>
       </select>
@@ -268,7 +268,7 @@ function renderTable(rows) {
     });
 
   if (!tbody.children.length) {
-    tbody.innerHTML = `<tr><td colspan="5">Níl aon imeachtaí ag teacht leis na scagairí.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5">Níl imeacht ar bith a chomhlíonann na scagairí seo.</td></tr>`;
   }
 }
 
