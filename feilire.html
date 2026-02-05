@@ -259,8 +259,12 @@ function renderTable(rows, levels = [], ages = [], areas = []) {
   });
 
   if (tbody.children.length === 0) {
-  tbody.innerHTML = `<tr><td colspan="5">Níl aon imeachtaí ag teacht leis na scagairí.</td></tr>`;
-}
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5">Níl aon imeachtaí ag teacht leis na scagairí.</td>
+      </tr>
+    `;
+  }
 }
 /* ---------- Apply filters ---------- */
 
