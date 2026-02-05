@@ -18,11 +18,10 @@
     .container {
       max-width: 1100px;
       margin: 2rem auto;
-      padding: 0 1rem;
+      padding: 0 1rem 2rem 1rem;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      padding-bottom: 2rem;
     }
 
     h1 {
@@ -106,12 +105,20 @@
       padding: 0.6rem;
       vertical-align: top;
       text-align: left;
-      word-break: break-word;
     }
 
     th {
       background: #f4f4f4;
       color: #004080;
+    }
+
+    th.more-col {
+      white-space: nowrap; /* prevents "Tuilleadh" from breaking */
+    }
+
+    th.time-col, td.time-col {
+      white-space: nowrap;
+      min-width: 70px; /* wide enough for hh:mm */
     }
 
     tr:nth-child(even) {
@@ -213,9 +220,9 @@
       <tr>
         <th>Dáta</th>
         <th>Teideal</th>
-        <th>Am</th>
+        <th class="time-col">Am</th>
         <th>Seoladh</th>
-        <th>Tuilleadh Eolais</th>
+        <th class="more-col">Tuilleadh Eolais</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -258,12 +265,13 @@ function parseEventDateTime(row) {
   return new Date(`${d[2]}-${d[1]}-${d[0]}T${normalizeTime(row["Am an imeachta"]) || "00:00"}`);
 }
 
-function formatDateEU(usDate) {
+/* ---------- Format date EU without year ---------- */
+function formatDateEUShort(usDate) {
   if (!usDate) return "";
   const parts = usDate.split("/");
   if (parts.length !== 3) return usDate;
-  const [month, day, year] = parts;
-  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
+  const [month, day] = parts;
+  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}`;
 }
 
 /* ---------- Fetch CSV ---------- */
@@ -307,14 +315,13 @@ function renderTable() {
 
       if (area && area !== (row["Ceantar"] || "").trim()) return;
 
-      // Escape user-submitted links
       const safeText = s => String(s || "").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
       tbody.insertAdjacentHTML("beforeend", `
         <tr>
-          <td>${formatDateEU(row["Dáta an imeachta"])}</td>
+          <td>${formatDateEUShort(row["Dáta an imeachta"])}</td>
           <td>${safeText(row["Teideal an imeachta"])}</td>
-          <td>${normalizeTime(row["Am an imeachta"])}</td>
+          <td class="time-col">${normalizeTime(row["Am an imeachta"])}</td>
           <td>${safeText(row["Seoladh an imeachta"])}</td>
           <td>${safeText(row["Tuilleadh Eolais"])}</td>
         </tr>
