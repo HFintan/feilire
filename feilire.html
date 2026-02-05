@@ -8,11 +8,18 @@
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      margin: 2rem;
       line-height: 1.5;
+      background: #fff;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
 
     h1 {
+      text-align: center;
       margin-bottom: 0.5rem;
     }
 
@@ -20,12 +27,14 @@
       color: #666;
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
+      text-align: center;
     }
 
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 1.5rem;
+      justify-content: center;
       margin-bottom: 1rem;
     }
 
@@ -44,16 +53,21 @@
       margin-bottom: 0.3rem;
     }
 
-    .ceantar-options {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.3rem;
+    select {
+      width: 100%;
+      padding: 0.4rem;
+      font-size: 1rem;
+    }
+
+    .actions {
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
     button {
-      margin: 1rem 0 2rem 0;
-      padding: 0.4rem 0.8rem;
+      padding: 0.4rem 1rem;
       font-size: 1rem;
+      cursor: pointer;
     }
 
     table {
@@ -66,15 +80,26 @@
       border: 1px solid #ddd;
       padding: 0.6rem;
       vertical-align: top;
+      text-align: left;
     }
 
     th {
       background: #f4f4f4;
-      text-align: left;
     }
 
     tr:nth-child(even) {
       background: #fafafa;
+    }
+
+    .form-wrapper {
+      margin-top: 3rem;
+      width: 100%;
+    }
+
+    .form-wrapper iframe {
+      width: 100%;
+      min-height: 80vh;
+      border: none;
     }
   </style>
 
@@ -83,200 +108,171 @@
 
 <body>
 
-<h1>Imeachtaí as Gaeilge i nGaillimh</h1>
-<p class="muted">
-  Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
-</p>
+<div class="container">
 
-<div class="filters">
+  <h1>Imeachtaí as Gaeilge i nGaillimh</h1>
+  <p class="muted">
+    Taispeántar anseo imeachtaí a cuireadh isteach tríd an bhfoirm agus atá ceadaithe.
+  </p>
 
-  <fieldset id="levelFilter">
-    <legend>Leibhéal Gaeilge</legend>
-    <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
-    <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
-    <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
-  </fieldset>
+  <div class="filters">
 
-  <fieldset id="ageFilter">
-    <legend>Aoisghrúpa</legend>
-    <label><input type="checkbox" value="Páistí réamhscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí réamhscoile</label>
-    <label><input type="checkbox" value="Páistí bunscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí bunscoile</label>
-    <label><input type="checkbox" value="Páistí meánscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí meánscoile</label>
-    <label><input type="checkbox" value="Daoine fásta"> Daoine fásta</label>
-    <label><input type="checkbox" value="Mic léinn amháin"> Mic léinn amháin</label>
-  </fieldset>
+    <fieldset id="levelFilter">
+      <legend>Leibhéal Gaeilge</legend>
+      <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
+      <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
+      <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
+    </fieldset>
 
-  <fieldset id="ceantarFilter">
-    <legend>Ceantar</legend>
-    <div class="ceantar-options">
-      <label><input type="checkbox" value="Baile Átha an Rí"> Baile Átha an Rí</label>
-      <label><input type="checkbox" value="Baile Locha Riach"> Baile Locha Riach</label>
-      <label><input type="checkbox" value="Bearna agus Cnoc na Cathrach"> Bearna & Cnoc na Cathrach</label>
-      <label><input type="checkbox" value="Cathair na Gaillimhe"> Cathair na Gaillimhe</label>
-      <label><input type="checkbox" value="Ceantar na nOileán"> Ceantar na nOileán</label>
-      <label><input type="checkbox" value="An Cheathrú Rua"> An Cheathrú Rua</label>
-      <label><input type="checkbox" value="An Clochán"> An Clochán</label>
-      <label><input type="checkbox" value="Cois Fharraige"> Cois Fharraige</label>
-      <label><input type="checkbox" value="Conamara Láir"> Conamara Láir</label>
-      <label><input type="checkbox" value="Conamara Thuaidh"> Conamara Thuaidh</label>
-      <label><input type="checkbox" value="Corr na Móna"> Corr na Móna</label>
-      <label><input type="checkbox" value="Dúiche Sheoigheach agus Tuar Mhic Éadaigh"> Dúiche Sheoigheach & Tuar Mhic Éadaigh</label>
-      <label><input type="checkbox" value="An tEachréidh"> An tEachréidh</label>
-      <label><input type="checkbox" value="Maigh Cuilinn"> Maigh Cuilinn</label>
-      <label><input type="checkbox" value="Oileáin Árann"> Oileáin Árann</label>
-      <label><input type="checkbox" value="Oirthear Chathair na Gaillimhe"> Oirthear Chathair na Gaillimhe</label>
-      <label><input type="checkbox" value="Ollscoil na Gaillimhe"> Ollscoil na Gaillimhe</label>
-      <label><input type="checkbox" value="Tuaim"> Tuaim</label>
-      <label><input type="checkbox" value="Eile"> Eile</label>
-    </div>
-  </fieldset>
+    <fieldset id="ageFilter">
+      <legend>Aoisghrúpa</legend>
+      <label><input type="checkbox" value="Páistí réamhscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí réamhscoile</label>
+      <label><input type="checkbox" value="Páistí bunscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí bunscoile</label>
+      <label><input type="checkbox" value="Páistí meánscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí meánscoile</label>
+      <label><input type="checkbox" value="Daoine fásta"> Daoine fásta</label>
+      <label><input type="checkbox" value="Mic léinn amháin"> Mic léinn amháin</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Ceantar</legend>
+      <select id="ceantarSelect">
+        <option value="">Gach ceantar</option>
+        <option>Baile Átha an Rí</option>
+        <option>Baile Locha Riach</option>
+        <option>Bearna agus Cnoc na Cathrach</option>
+        <option>Cathair na Gaillimhe</option>
+        <option>Ceantar na nOileán</option>
+        <option>An Cheathrú Rua</option>
+        <option>An Clochán</option>
+        <option>Cois Fharraige</option>
+        <option>Conamara Láir</option>
+        <option>Conamara Thuaidh</option>
+        <option>Corr na Móna</option>
+        <option>Dúiche Sheoigheach agus Tuar Mhic Éadaigh</option>
+        <option>An tEachréidh</option>
+        <option>Maigh Cuilinn</option>
+        <option>Oileáin Árann</option>
+        <option>Oirthear Chathair na Gaillimhe</option>
+        <option>Ollscoil na Gaillimhe</option>
+        <option>Tuaim</option>
+        <option>Eile</option>
+      </select>
+    </fieldset>
+
+  </div>
+
+  <div class="actions">
+    <button id="applyFilter">Scag</button>
+  </div>
+
+  <table id="events">
+    <thead>
+      <tr>
+        <th>Dáta</th>
+        <th>Teideal</th>
+        <th>Am</th>
+        <th>Seoladh</th>
+        <th>Tuilleadh Eolais</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="form-wrapper">
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLSee8lpy1NaWNO3F6Cmm5YiIx-9UuZzd9gtgzOsnvk_0OYbIGQ/viewform?embedded=true"
+      loading="lazy"
+      title="Foirm Imeachtaí">
+      Loading…
+    </iframe>
+  </div>
 
 </div>
-
-<button id="applyFilter">Scag</button>
-
-<table id="events">
-  <thead>
-    <tr>
-      <th>Dáta</th>
-      <th>Teideal</th>
-      <th>Am</th>
-      <th>Seoladh</th>
-      <th>Tuilleadh Eolais</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
 
 let allRows = [];
 
-/* ---------- Helpers ---------- */
-
-function formatDateUStoEU(usDate) {
-  if (!usDate) return "";
-  const parts = usDate.split("/");
-  if (parts.length !== 3) return usDate;
-  const [month, day, year] = parts;
-  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}/${year}`;
-}
-
 function normalizeTime(value) {
   if (!value) return "";
-
-  // Case 1: HH:MM or HH:MM:SS
   if (typeof value === "string" && /^\d{1,2}:\d{2}/.test(value)) {
     return value.slice(0,5);
   }
-
-  // Case 2: ISO or spreadsheet date-time string
-  if (typeof value === "string" && value.includes("1899-12-30")) {
-    const match = value.match(/(\d{2}):(\d{2})/);
-    if (match) {
-      return `${match[1]}:${match[2]}`;
-    }
-  }
-
-  // Case 3: Spreadsheet numeric time
   const num = Number(value);
   if (!isNaN(num)) {
     const totalMinutes = Math.round(num * 24 * 60);
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    return `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}`;
+    const h = Math.floor(totalMinutes / 60);
+    const m = totalMinutes % 60;
+    return `${h.toString().padStart(2,"0")}:${m.toString().padStart(2,"0")}`;
   }
-
   return "";
 }
 
 function parseEventDateTime(row) {
-  const dateStr = row["Dáta an imeachta"] || "";
-  const timeStr = normalizeTime(row["Am an imeachta"]) || "00:00";
-
-  const parts = dateStr.split("/");
-  if (parts.length !== 3) return new Date(9999,0,1);
-
-  const [day, month, year] = parts;
-  return new Date(`${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}T${timeStr}`);
+  const d = (row["Dáta an imeachta"] || "").split("/");
+  if (d.length !== 3) return new Date(9999,0,1);
+  return new Date(`${d[2]}-${d[1]}-${d[0]}T${normalizeTime(row["Am an imeachta"]) || "00:00"}`);
 }
 
-/* ---------- Fetch CSV ---------- */
-
 fetch(CSV_URL)
-  .then(res => res.text())
+  .then(r => r.text())
   .then(csv => {
     Papa.parse(csv, {
       header: true,
       skipEmptyLines: true,
-      complete: results => {
-        allRows = results.data;
+      complete: res => {
+        allRows = res.data;
         renderTable(allRows);
       }
     });
   });
 
-/* ---------- Render ---------- */
-
-function renderTable(rows, levels = [], ages = [], areas = []) {
+function renderTable(rows) {
   const tbody = document.querySelector("#events tbody");
   tbody.innerHTML = "";
 
-  const sortedRows = rows.slice().sort(
-    (a,b) => parseEventDateTime(a) - parseEventDateTime(b)
-  );
+  const levels = Array.from(document.querySelectorAll("#levelFilter input:checked")).map(i => i.value);
+  const ages = Array.from(document.querySelectorAll("#ageFilter input:checked")).map(i => i.value);
+  const area = document.getElementById("ceantarSelect").value;
 
-  sortedRows.forEach(row => {
+  rows
+    .slice()
+    .sort((a,b) => parseEventDateTime(a) - parseEventDateTime(b))
+    .forEach(row => {
 
-    if (!row.Approved || row.Approved.toString().toLowerCase().trim() !== "true") return;
+      if (row.Approved?.toLowerCase?.() !== "true") return;
 
-    if (levels.length > 0) {
-      const rowLevels = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "")
-        .split(",").map(s => s.trim());
-      if (!rowLevels.some(l => levels.includes(l))) return;
-    }
+      if (levels.length) {
+        const v = (row["Imeacht oiriúnach le haghaidh cén caighdeán Gaeilge?"] || "").split(",").map(s => s.trim());
+        if (!v.some(x => levels.includes(x))) return;
+      }
 
-    if (ages.length > 0) {
-      const rowAges = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "")
-        .split(",").map(s => s.trim());
-      if (!rowAges.some(a => ages.includes(a))) return;
-    }
+      if (ages.length) {
+        const v = (row["Imeacht oiriúnach do cén aoisghrúpa?"] || "").split(",").map(s => s.trim());
+        if (!v.some(x => ages.includes(x))) return;
+      }
 
-    if (areas.length > 0) {
-      if (!areas.includes((row["Ceantar"] || "").trim())) return;
-    }
+      if (area && area !== (row["Ceantar"] || "").trim()) return;
 
-    tbody.insertAdjacentHTML("beforeend", `
-      <tr>
-        <td>${formatDateUStoEU(row["Dáta an imeachta"])}</td>
-        <td>${row["Teideal an imeachta"] || ""}</td>
-        <td>${normalizeTime(row["Am an imeachta"])}</td>
-        <td>${row["Seoladh an imeachta"] || ""}</td>
-        <td>${row["Tuilleadh Eolais"] || ""}</td>
-      </tr>
-    `);
-  });
+      tbody.insertAdjacentHTML("beforeend", `
+        <tr>
+          <td>${row["Dáta an imeachta"] || ""}</td>
+          <td>${row["Teideal an imeachta"] || ""}</td>
+          <td>${normalizeTime(row["Am an imeachta"])}</td>
+          <td>${row["Seoladh an imeachta"] || ""}</td>
+          <td>${row["Tuilleadh Eolais"] || ""}</td>
+        </tr>
+      `);
+    });
 
-  if (tbody.children.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="5">Níl aon imeachtaí ag teacht leis na scagairí.</td>
-      </tr>
-    `;
+  if (!tbody.children.length) {
+    tbody.innerHTML = `<tr><td colspan="5">Níl aon imeachtaí ag teacht leis na scagairí.</td></tr>`;
   }
 }
-/* ---------- Apply filters ---------- */
 
-document.getElementById("applyFilter").addEventListener("click", () => {
-  const levels = Array.from(document.querySelectorAll("#levelFilter input:checked")).map(cb => cb.value);
-  const ages = Array.from(document.querySelectorAll("#ageFilter input:checked")).map(cb => cb.value);
-  const areas = Array.from(document.querySelectorAll("#ceantarFilter input:checked")).map(cb => cb.value);
-  renderTable(allRows, levels, ages, areas);
-});
+document.getElementById("applyFilter").addEventListener("click", () => renderTable(allRows));
 </script>
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSee8lpy1NaWNO3F6Cmm5YiIx-9UuZzd9gtgzOsnvk_0OYbIGQ/viewform?embedded=true" width="640" height="3164" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-  
 </body>
 </html>
