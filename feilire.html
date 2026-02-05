@@ -228,8 +228,6 @@ function renderTable(rows, levels = [], ages = [], areas = []) {
   );
 
   sortedRows.forEach(row => {
-      console.log(row["Am an imeachta"], normalizeTime(row["Am an imeachta"]));
-
 
     if (!row.Approved || row.Approved.toString().toLowerCase().trim() !== "true") return;
 
@@ -259,8 +257,11 @@ function renderTable(rows, levels = [], ages = [], areas = []) {
       </tr>
     `);
   });
-}
 
+  if (tbody.children.length === 0) {
+  tbody.innerHTML = `<tr><td colspan="5">Níl aon imeachtaí ag teacht leis na scagairí.</td></tr>`;
+}
+}
 /* ---------- Apply filters ---------- */
 
 document.getElementById("applyFilter").addEventListener("click", () => {
