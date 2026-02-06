@@ -270,12 +270,12 @@ function parseEventDateTime(row) {
 }
 
 /* ---------- Format date EU without year ---------- */
-function formatDateEUShort(usDate) {
-  if (!usDate) return "";
-  const parts = usDate.split("/");
-  if (parts.length !== 3) return usDate;
-  const [month, day] = parts;
-  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}`;
+function formatDateEUShort(euDate) {
+  if (!euDate) return "";
+  const parts = euDate.split("/");
+  if (parts.length < 2) return euDate;
+  const [day, month] = parts;
+  return `${day.padStart(2,"0")}/${month.padStart(2,"0")}`;
 }
 
 /* ---------- Fetch CSV ---------- */
