@@ -329,7 +329,7 @@ function renderTable() {
           <td>${safeText(row["Teideal an imeachta"])}</td>
           <td class="time-col">${normalizeTime(row["Am an imeachta"])}</td>
           <td>${safeText(row["Seoladh an imeachta"])}</td>
-          <td>${safeText(row["Tuilleadh Eolais"])}</td>
+          <td>${row["Tuilleadh Eolais"] || ""}</td>
         </tr>
       `);
     });
