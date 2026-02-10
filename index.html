@@ -1,321 +1,287 @@
 <!DOCTYPE html>
 <html lang="ga">
 <head>
-<meta charset="UTF-8">
-<title>Féilire Imeachtaí</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Féilire Imeachtaí</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-/* ---------- Body & Container ---------- */
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.5;
-  background: linear-gradient(160deg, #f0f8ff 0%, #e6f7ff 100%);
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    /* ---------- Body & Container ---------- */
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      background: linear-gradient(160deg, #f0f8ff 0%, #e6f7ff 100%);
+      margin: 0;
+      padding: 0;
+    }
 
-.container {
-  max-width: 1100px;
-  margin: 2rem auto;
-  padding: 0 1rem 2rem 1rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem 2rem 1rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
 
-h1 {
-  text-align: center;
-  margin: 2rem 0 0.5rem;
-  color: #004080;
-}
+    h1 {
+      text-align: center;
+      margin: 2rem 0 0.5rem;
+      color: #004080;
+    }
 
-.muted {
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-}
+    .muted {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
 
-/* ---------- Filters ---------- */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
+    /* ---------- Filters ---------- */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
 
-fieldset {
-  border: 1px solid #ddd;
-  padding: 0.8rem 1rem;
-  min-width: 220px;
-  border-radius: 6px;
-  background: #f9f9f9;
-}
+    fieldset {
+      border: 1px solid #ddd;
+      padding: 0.8rem 1rem;
+      min-width: 220px;
+      border-radius: 6px;
+      background: #f9f9f9;
+    }
 
-legend {
-  font-weight: bold;
-  color: #004080;
-}
+    legend {
+      font-weight: bold;
+      color: #004080;
+    }
 
-label {
-  display: block;
-  margin-bottom: 0.3rem;
-  cursor: pointer;
-}
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      cursor: pointer;
+    }
 
-select {
-  width: 100%;
-  padding: 0.4rem;
-  font-size: 1rem;
-  border-radius: 4px;
-}
+    select {
+      width: 100%;
+      padding: 0.4rem;
+      font-size: 1rem;
+      border-radius: 4px;
+    }
 
-.actions {
-  text-align: center;
-  margin-bottom: 2rem;
-}
+    .actions {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
 
-button {
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-  background-color: #004080;
-  color: #fff;
-}
+    button {
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background-color: #004080;
+      color: #fff;
+      transition: background-color 0.2s;
+    }
 
-button:hover {
-  background-color: #0066cc;
-}
+    button:hover {
+      background-color: #0066cc;
+    }
 
-/* ---------- Table ---------- */
-.table-wrap {
-  overflow-x: auto;
-}
+    /* ---------- Table ---------- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  table-layout: fixed;
-}
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.6rem;
+      vertical-align: top;
+      text-align: left;
+    }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 0.6rem;
-  vertical-align: top;
-  text-align: left;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-}
+    th {
+      background: #f4f4f4;
+      color: #004080;
+    }
 
-th {
-  background: #f4f4f4;
-  color: #004080;
-}
+    th.more-col {
+      white-space: nowrap; /* prevents "Tuilleadh" from breaking */
+    }
 
-th.more-col {
-  white-space: nowrap;
-}
+    th.time-col, td.time-col {
+      white-space: nowrap;  /* keep hh:mm on one line */
+      width: 1%;            /* shrink column to fit content */
+    }
 
-th.time-col,
-td.time-col {
-  white-space: nowrap;
-  width: 1%;
-}
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
 
-tr:nth-child(even) {
-  background: #fafafa;
-}
+    /* ---------- Form iframe ---------- */
+    .form-wrapper {
+      margin-top: 3rem;
+      width: 100%;
+    }
 
-/* ---------- Expandable Tuilleadh Eolais ---------- */
-.toggle-more {
-  background: none;
-  border: none;
-  color: #004080;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0;
-}
+    .form-wrapper iframe {
+      width: 100%;
+      min-height: 80vh;
+      border: none;
+      border-radius: 6px;
+    }
 
-.more-content {
-  margin-top: 0.5rem;
-}
+/* ---------- Responsive ---------- */
+  @media (max-width: 600px) {
+    .filters {
+      flex-direction: column;
+      align-items: center;
+    }
 
-/* ---------- Form iframe ---------- */
-.form-wrapper {
-  margin-top: 3rem;
-  width: 100%;
-}
+    fieldset {
+      width: 100%;
+      max-width: 320px;
+    }
 
-.form-wrapper iframe {
-  width: 100%;
-  min-height: 80vh;
-  border: none;
-  border-radius: 6px;
-}
+    /* --------- New: smaller fonts on phone --------- */
+    table {
+      font-size: 0.8rem;  /* smaller table text */
+    }
 
-/* ---------- Mobile ---------- */
-@media (max-width: 600px) {
+    h1 {
+      font-size: 1.5rem;  /* smaller heading */
+    }
 
-  .filters {
-    flex-direction: column;
-    align-items: center;
+    .muted {
+      font-size: 0.8rem;  /* smaller instructions */
+    }
+
+    fieldset {
+      font-size: 0.85rem;  /* smaller filter labels */
+    }
+
+    button {
+      font-size: 0.85rem;  /* smaller buttons */
+      padding: 0.4rem 1rem;
+    }
   }
+    
+  </style>
 
-  fieldset {
-    width: 100%;
-    max-width: 320px;
-    font-size: 0.85rem;
-  }
-
-  table {
-    font-size: 0.8rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  .muted {
-    font-size: 0.8rem;
-  }
-
-  button {
-    font-size: 0.85rem;
-    padding: 0.4rem 1rem;
-  }
-
-  /* hide desktop header */
-  th.more-col {
-    display: none;
-  }
-
-  .more-content {
-    display: none;
-    padding: 0.6rem;
-    margin-top: 0.5rem;
-    background: #f4f8ff;
-    border-left: 3px solid #004080;
-    font-size: 0.8rem;
-  }
-
-  .toggle-more[aria-expanded="true"] + .more-content {
-    display: block;
-  }
-}
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 
 <body>
 <div class="container">
 
-<h1>Imeachtaí as Gaeilge i nGaillimh</h1>
+  <h1>Imeachtaí as Gaeilge i nGaillimh</h1>
+  <p class="muted">
+    Is féidir imeacht a chlárú leis an bhfoirm ag bun an leathanaigh.<br><br>
+    Ní fhógraítear imeachtaí ar-líne anseo, nó ranganna Gaeilge a gcaithfear íoc astu.<br><br>
+    Ba cheart go mbeadh tuismitheoirí/caomhnóirí i láthair d'imeachtaí le haghaidh páistí scoile.<br><br>
+    Más gá aon rud a athrú - msh, má dhéanann tú botún, nó má bhriseann an suíomh - cuirigí rphost chuig feilire[ponc]gaillimh[ag]gmail[ponc]com. 
+    <br><br><br>
+    <i>Ní ghlacfar le freagracht as aon chur amú ama, airgid, gortú nó bás, argóintí nó croíthe briste ag eascairt ó bhotúin ar bith sa liosta thíos.</i>
+  </p>
 
-<p class="muted">
-Is féidir imeacht a chlárú leis an bhfoirm ag bun an leathanaigh.<br><br>
-Ní fhógraítear imeachtaí ar-líne anseo, nó ranganna Gaeilge a gcaithfear íoc astu.<br><br>
-Ba cheart go mbeadh tuismitheoirí/caomhnóirí i láthair d'imeachtaí le haghaidh páistí scoile.<br><br>
-Más gá aon rud a athrú - msh, má dhéanann tú botún, nó má bhriseann an suíomh -
-cuirigí rphost chuig feilire[ponc]gaillimh[ag]gmail[ponc]com.
-<br><br><br>
-<i>Ní ghlacfar le freagracht as aon chur amú ama, airgid, gortú nó bás,
-argóintí nó croíthe briste ag eascairt ó bhotúin ar bith sa liosta thíos.</i>
-</p>
+  <!-- Filters -->
+  <div class="filters">
+    <fieldset id="levelFilter">
+      <legend>Leibhéal Gaeilge</legend>
+      <label><input type="checkbox" value="Dátheangach"> Dátheangach</label>
+      <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
+      <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
+      <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
+    </fieldset>
 
-<!-- Filters -->
-<div class="filters">
-  <fieldset id="levelFilter">
-    <legend>Leibhéal Gaeilge</legend>
-    <label><input type="checkbox" value="Dátheangach"> Dátheangach</label>
-    <label><input type="checkbox" value="Bonnleibhéal"> Bonnleibhéal</label>
-    <label><input type="checkbox" value="Meánleibhéal"> Meánleibhéal</label>
-    <label><input type="checkbox" value="Ardleibhéal"> Ardleibhéal</label>
-  </fieldset>
+    <fieldset id="ageFilter">
+      <legend>Aoisghrúpa</legend>
+      <label><input type="checkbox" value="Páistí réamhscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí réamhscoile</label>
+      <label><input type="checkbox" value="Páistí bunscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí bunscoile</label>
+      <label><input type="checkbox" value="Páistí meánscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí meánscoile</label>
+      <label><input type="checkbox" value="Daoine fásta"> Daoine fásta</label>
+      <label><input type="checkbox" value="Mic léinn amháin"> Mic léinn amháin</label>
+    </fieldset>
 
-  <fieldset id="ageFilter">
-    <legend>Aoisghrúpa</legend>
-    <label><input type="checkbox" value="Páistí réamhscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí réamhscoile</label>
-    <label><input type="checkbox" value="Páistí bunscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí bunscoile</label>
-    <label><input type="checkbox" value="Páistí meánscoile (le tuismitheoirí/caomhnóirí leo)"> Páistí meánscoile</label>
-    <label><input type="checkbox" value="Daoine fásta"> Daoine fásta</label>
-    <label><input type="checkbox" value="Mic léinn amháin"> Mic léinn amháin</label>
-  </fieldset>
+    <fieldset>
+      <legend>Ceantar</legend>
+      <select id="ceantarSelect">
+        <option value="">Gach ceantar</option>
+        <option>Baile Átha an Rí</option>
+        <option>Baile Locha Riach</option>
+        <option>Bearna agus Cnoc na Cathrach</option>
+        <option>Cathair na Gaillimhe</option>
+        <option>Ceantar na nOileán</option>
+        <option>An Cheathrú Rua</option>
+        <option>An Clochán</option>
+        <option>Cois Fharraige</option>
+        <option>Conamara Láir</option>
+        <option>Conamara Thuaidh</option>
+        <option>Corr na Móna</option>
+        <option>Dúiche Sheoigheach agus Tuar Mhic Éadaigh</option>
+        <option>An tEachréidh</option>
+        <option>Maigh Cuilinn</option>
+        <option>Oileáin Árann</option>
+        <option>Oirthear Chathair na Gaillimhe</option>
+        <option>Tuaim</option>
+        <option>Eile</option>
+      </select>
+    </fieldset>
+  </div>
 
-  <fieldset>
-    <legend>Ceantar</legend>
-    <select id="ceantarSelect">
-      <option value="">Gach ceantar</option>
-      <option>Baile Átha an Rí</option>
-      <option>Baile Locha Riach</option>
-      <option>Bearna agus Cnoc na Cathrach</option>
-      <option>Cathair na Gaillimhe</option>
-      <option>Ceantar na nOileán</option>
-      <option>An Cheathrú Rua</option>
-      <option>An Clochán</option>
-      <option>Cois Fharraige</option>
-      <option>Conamara Láir</option>
-      <option>Conamara Thuaidh</option>
-      <option>Corr na Móna</option>
-      <option>Dúiche Sheoigheach agus Tuar Mhic Éadaigh</option>
-      <option>An tEachréidh</option>
-      <option>Maigh Cuilinn</option>
-      <option>Oileáin Árann</option>
-      <option>Oirthear Chathair na Gaillimhe</option>
-      <option>Tuaim</option>
-      <option>Eile</option>
-    </select>
-  </fieldset>
-</div>
+  <!-- Apply Filter -->
+  <div class="actions">
+    <button id="applyFilter">Scag</button>
+  </div>
 
-<div class="actions">
-  <button id="applyFilter">Scag</button>
-</div>
+  <!-- Events Table -->
+  <table id="events">
+    <thead>
+      <tr>
+        <th>Dáta</th>
+        <th>Teideal</th>
+        <th class="time-col">Am</th>
+        <th>Seoladh</th>
+        <th class="more-col">Tuilleadh Eolais</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-<div class="table-wrap">
-<table id="events">
-<thead>
-<tr>
-  <th>Dáta</th>
-  <th>Teideal</th>
-  <th class="time-col">Am</th>
-  <th>Seoladh</th>
-  <th class="more-col">Tuilleadh Eolais</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-</div>
+  <!-- Google Form -->
+  <div class="form-wrapper">
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLSee8lpy1NaWNO3F6Cmm5YiIx-9UuZzd9gtgzOsnvk_0OYbIGQ/viewform?embedded=true"
+      loading="lazy"
+      title="Foirm Imeachtaí">
+      Loading…
+    </iframe>
+  </div>
 
-<div class="form-wrapper">
-<iframe
-  src="https://docs.google.com/forms/d/e/1FAIpQLSee8lpy1NaWNO3F6Cmm5YiIx-9UuZzd9gtgzOsnvk_0OYbIGQ/viewform?embedded=true"
-  loading="lazy"
-  title="Foirm Imeachtaí">
-</iframe>
-</div>
-
-</div>
+</div> <!-- end of .container -->
 
 <script>
-const CSV_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa8NU6x7B_AZNcibBPSbqucyEX8tTf83ejnLgtHFdaQzqh4bsRNRv38YdMaMMMTaaKQ8pZ8YthEjg5/pub?gid=2075484807&single=true&output=csv";
 
 let allRows = [];
 
+/* ---------- Helpers ---------- */
 function normalizeTime(value) {
   if (!value) return "";
-  if (/^\d{1,2}:\d{2}/.test(value)) return value.slice(0,5);
+  if (typeof value === "string" && /^\d{1,2}:\d{2}/.test(value)) return value.slice(0,5);
   const num = Number(value);
   if (!isNaN(num)) {
-    const mins = Math.round(num * 24 * 60);
-    return `${String(Math.floor(mins/60)).padStart(2,"0")}:${String(mins%60).padStart(2,"0")}`;
+    const totalMinutes = Math.round(num * 24 * 60);
+    const h = Math.floor(totalMinutes / 60);
+    const m = totalMinutes % 60;
+    return `${h.toString().padStart(2,"0")}:${m.toString().padStart(2,"0")}`;
   }
   return "";
 }
@@ -326,25 +292,30 @@ function parseEventDateTime(row) {
   return new Date(`${d[2]}-${d[1]}-${d[0]}T${normalizeTime(row["Am an imeachta"]) || "00:00"}`);
 }
 
+/* ---------- Format date EU without year ---------- */
 function formatDateEUShort(euDate) {
   if (!euDate) return "";
-  const [day, month] = euDate.split("/");
+  const parts = euDate.split("/");
+  if (parts.length < 2) return euDate;
+  const [day, month] = parts;
   return `${day.padStart(2,"0")}/${month.padStart(2,"0")}`;
 }
 
+/* ---------- Fetch CSV ---------- */
 fetch(CSV_URL)
-.then(r => r.text())
-.then(csv => {
-  Papa.parse(csv, {
-    header: true,
-    skipEmptyLines: true,
-    complete: res => {
-      allRows = res.data;
-      renderTable();
-    }
+  .then(r => r.text())
+  .then(csv => {
+    Papa.parse(csv, {
+      header: true,
+      skipEmptyLines: true,
+      complete: res => {
+        allRows = res.data;
+        renderTable();
+      }
+    });
   });
-});
 
+/* ---------- Render Table ---------- */
 function renderTable() {
   const tbody = document.querySelector("#events tbody");
   tbody.innerHTML = "";
@@ -371,23 +342,15 @@ function renderTable() {
 
       if (area && area !== (row["Ceantar"] || "").trim()) return;
 
-      const safe = s => String(s || "").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-      const more = safe(row["Tuilleadh Eolais"]).trim();
+      const safeText = s => String(s || "").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
       tbody.insertAdjacentHTML("beforeend", `
         <tr>
           <td>${formatDateEUShort(row["Dáta an imeachta"])}</td>
-          <td>${safe(row["Teideal an imeachta"])}</td>
+          <td>${safeText(row["Teideal an imeachta"])}</td>
           <td class="time-col">${normalizeTime(row["Am an imeachta"])}</td>
-          <td>${safe(row["Seoladh an imeachta"])}</td>
-          <td class="more-col">
-            ${
-              more
-                ? `<button class="toggle-more" aria-expanded="false" aria-label="Tuilleadh eolais">ℹ️</button>
-                   <div class="more-content">${more}</div>`
-                : ``
-            }
-          </td>
+          <td>${safeText(row["Seoladh an imeachta"])}</td>
+          <td>${row["Tuilleadh Eolais"] || ""}</td>
         </tr>
       `);
     });
@@ -397,14 +360,8 @@ function renderTable() {
   }
 }
 
+/* ---------- Apply Filters ---------- */
 document.getElementById("applyFilter").addEventListener("click", renderTable);
-
-document.addEventListener("click", e => {
-  if (!e.target.classList.contains("toggle-more")) return;
-  const btn = e.target;
-  const expanded = btn.getAttribute("aria-expanded") === "true";
-  btn.setAttribute("aria-expanded", String(!expanded));
-});
 </script>
 </body>
 </html>
