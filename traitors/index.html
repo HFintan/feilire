@@ -1,2 +1,197 @@
-<h1>Rudeigin Page</h1>
-<p>Hello world.</p>
+<!DOCTYPE html>
+<html lang="ga">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Na Sionnaigh – Traitors as Gaeilge</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    color: #f5f5f5;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+section {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem 1rem;
+}
+
+h2 {
+    border-bottom: 2px solid #f39c12;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background: rgba(255,255,255,0.08);
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+.highlight {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+blockquote {
+    background: rgba(0,0,0,0.4);
+    padding: 1rem;
+    border-left: 4px solid #f39c12;
+    font-style: italic;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    opacity: 0.7;
+}
+button {
+    background: #f39c12;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+button:hover {
+    background: #e67e22;
+}
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Na Sionnaigh</h1>
+    <p>Cluiche “Traitors” as Gaeilge</p>
+</header>
+
+<section>
+    <h2>🎭 Rólanna</h2>
+
+    <div class="card">
+        <strong>🦊 Na Sionnaigh (2–3)</strong><br>
+        Déanann siad iarracht gach duine eile a mharú i rith na hoíche.
+    </div>
+
+    <div class="card">
+        <strong>🦉 An tUllchabhán (Banríon)</strong><br>
+        Is féidir leo a fháil amach uair amháin sa bhabhta an sionnach é duine áirithe.
+    </div>
+
+    <div class="card">
+        <strong>🦔 An Gráinneog (Rí)</strong><br>
+        Is féidir leo duine amháin a chosaint gach oíche (fiú iad féin).
+    </div>
+
+    <div class="card">
+        <strong>🐰 Na Coiníní</strong><br>
+        Gan ról speisialta – ach caithfidh siad na sionnaigh a aimsiú!
+    </div>
+</section>
+
+<section>
+    <h2>🌙 Titim na hOíche (Script don Scéalaí)</h2>
+
+    <blockquote>
+        "TITEANN AN OÍCHE. TÉANN GACH DUINE INA CHODLADH – DÚNAIGÍ BHUR SÚILE."
+    </blockquote>
+
+    <blockquote>
+        "OSCLAÍONN NA SIONNAIGH A SHÚILE. ROGHNAÍONN SIAD DUINE ÉIGIN."
+    </blockquote>
+
+    <blockquote>
+        "OSCLAÍONN AN T-ULLCHABHÁN A SHÚILE. FÉACHANN SIAD AR DHUINE ÉIGIN."
+    </blockquote>
+
+    <blockquote>
+        "DÚISÍONN AN GRAINNEOG. ROGHNAÍONN SIAD DUINE LE COSAINT."
+    </blockquote>
+
+    <blockquote>
+        "TÁ AN MHAIDIN TAGTHA… ACH AMHÁIN X ATÁ MARAITHE AG NA SIONNAIGH!"
+    </blockquote>
+</section>
+
+<section>
+    <h2>🗣 An Díospóireacht</h2>
+    Plé oscailte idir na himreoirí. Cuirtear cúisimh, déantar leithscéalta,
+    agus tar éis ~10 nóiméad déantar vóta rúnda.
+
+    <div class="card">
+        An té leis an líon is mó vótaí → <span class="highlight">amach as an gcluiche.</span>
+    </div>
+
+    Sula bhfágann siad:
+    <div class="card">
+        Insíonn siad an sionnach iad nó nach ea.
+    </div>
+</section>
+
+<section>
+    <h2>🏆 Conas a Bhuaitear</h2>
+
+    <div class="card">
+        Má fhaigheann gach sionnach bás → <span class="highlight">Bua ag na hainmhithe eile.</span>
+    </div>
+
+    <div class="card">
+        Má mharaíonn na sionnaigh gach duine eile → <span class="highlight">Bua ag na Sionnaigh.</span>
+    </div>
+</section>
+
+<section>
+    <h2>🎲 Treoir Thapa</h2>
+    <button onclick="toggleRules()">Taispeáin / Folaigh Achoimre</button>
+
+    <div id="quickRules" class="hidden">
+        <div class="card">
+            Oíche → Roghanna rúnda<br>
+            Maidin → Fógra báis<br>
+            Díospóireacht → Vóta<br>
+            Arís… go dtí bua!
+        </div>
+    </div>
+</section>
+
+<footer>
+    Cruthaithe don imeacht Gaeilge 🦊🌙
+</footer>
+
+<script>
+function toggleRules() {
+    var x = document.getElementById("quickRules");
+    if (x.classList.contains("hidden")) {
+        x.classList.remove("hidden");
+    } else {
+        x.classList.add("hidden");
+    }
+}
+</script>
+
+</body>
+</html>
