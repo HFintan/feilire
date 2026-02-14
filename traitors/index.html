@@ -5,11 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Na Sionnaigh – Traitors as Gaeilge</title>
 
+<!-- Google Fonts for fancier title -->
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
-    background: #f5f5f5; /* brighter background */
+    background: #f5f5f5;
     color: #222222;
     line-height: 1.6;
 }
@@ -20,7 +23,8 @@ header {
 }
 
 header h1 {
-    font-size: 3rem;
+    font-family: 'UnifrakturCook', cursive; /* fancier font for title */
+    font-size: 3.5rem;
     margin-bottom: 0.5rem;
 }
 
@@ -28,6 +32,14 @@ header p, header .blurb {
     font-size: 1.2rem;
     max-width: 700px;
     margin: 0.5rem auto 1.5rem auto;
+}
+
+header img {
+    max-width: 90%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 section {
@@ -54,13 +66,6 @@ h2 {
 .highlight {
     color: #f39c12;
     font-weight: bold;
-}
-
-blockquote {
-    background: #fff3e0;
-    padding: 1rem;
-    border-left: 4px solid #f39c12;
-    font-style: italic;
 }
 
 button {
@@ -115,6 +120,8 @@ footer {
         líontar an fhoraois le cúisimh, le leithscéalta, agus le hamhras. Cluiche spleodrach sóisialta trí mheán na Gaeilge é seo,
         lán le straitéis, mearbhall, agus bréaga beaga bána. Ní bheidh a fhios agat cé atá ar do thaobh… go dtí go mbeidh sé ródhéanach.
     </p>
+    <!-- Large image under blurb -->
+    <img src="https://github.com/HFintan/feilire/blob/main/traitors2.jpeg" alt="Sionnach i bhfolach i measc coiníní san fhoraois">
 </header>
 
 <section>
@@ -142,43 +149,28 @@ footer {
 </section>
 
 <section>
-    <h2>🌙 Night Phase – Titim na hOíche</h2>
+    <h2>🌙 Oíche</h2>
 
-    <blockquote>
-        "TITEANN AN OÍCHE. TÉANN GACH DUINE INA CHODLADH – DÚNAIGÍ BHUR SÚILE."
-    </blockquote>
-
-    <blockquote>
-        "OSCLAÍONN NA SIONNAIGH A SHÚILE. ROGHNAÍONN SIAD DUINE ÉIGIN."
-    </blockquote>
-
-    <blockquote>
-        "OSCLAÍONN AN T-ULLCHABHÁN A SHÚILE. FÉACHANN SIAD AR DHUINE ÉIGIN."
-    </blockquote>
-
-    <blockquote>
-        "DÚISÍONN AN GRAINNEOG. ROGHNAÍONN SIAD DUINE LE COSAINT."
-    </blockquote>
+    <div class="card">
+        1. Dúnann gach duine a shúile.<br>
+        2. Osclaíonn na Sionnaigh a shúile agus roghnaíonn siad íospartach.<br>
+        3. Dúnann na Sionnaigh a shúile arís.<br>
+        4. Osclaíonn an t-Ullchabhán a shúile agus fiosraíonn siad faoi imreoir amháin.<br>
+        5. Dúnann an t-Ullchabhán a shúile arís.<br>
+        6. Osclaíonn an Ghráinneog a shúile agus roghnaíonn duine le cosaint.<br>
+        7. Dúnann an Ghráinneog a shúile arís.
+    </div>
 </section>
 
 <section>
-    <h2>☀️ Day Phase – Díospóireacht</h2>
-
-    <blockquote>
-        "TÁ AN MHAIDIN TAGTHA… ACH AMHÁIN X ATÁ MARAITHE AG NA SIONNAIGH!"
-    </blockquote>
-
-    <p>
-        Plé oscailte idir na himreoirí. Cuirtear cúisimh, déantar leithscéalta,
-        agus tar éis ~10 nóiméad déantar vóta rúnda.
-    </p>
+    <h2>☀️ Lá</h2>
 
     <div class="card">
-        An té leis an líon is mó vótaí → <span class="highlight">amach as an gcluiche.</span>
-    </div>
-
-    <div class="card">
-        Sula bhfágann siad: Insíonn siad an sionnach iad nó nach ea.
+        1. Dúisíonn gach duine - seachas an té a roghnaigh na Sionnaigh, a bheas amach as an gcluiche (más nach roghnaigh an Ghráinneog an té céanna).<br>
+        2. Plé idir na himreoirí: cúiseamh, leithscéalta, agus bréaga.<br>
+        3. Scríobhann gach duine ainm imreora amháin chun a chur amach ón bhforaois.<br>
+        4. Nochtar na vótaí; té leis an líon is mó → <span class="highlight">amach as an gcluiche.</span><br>
+        5. Sula n-imíonn siad, insíonn siad an Sionnach iad.
     </div>
 </section>
 
@@ -193,19 +185,19 @@ footer {
             2. Osclaíonn na Sionnaigh a shúile.<br>
             3. Roghnaíonn na Sionnaigh íospartach.<br>
             4. Dúnann na Sionnaigh a shúile.<br>
-            5. Osclaíonn an t-Ulchabhán a súile.<br>
-            6. Fiosraíonn an t-Ulchabhán faoi imreoir éigin.<br>
-            7. Dúnann an t-Ulchabhán a súile.<br>
+            5. Osclaíonn an t-Ullchabhán a súile.<br>
+            6. Fiosraíonn an t-Ullchabhán faoi imreoir éigin.<br>
+            7. Dúnann an t-Ullchabhán a súile.<br>
             8. Osclaíonn an Ghráinneog a súile.<br>
             9. Roghnaíonn siad duine éigin le cosaint.<br>
             10. Dúnann an Ghráinneog a shúile arís.<br>
             <hr>
             <strong>I Rith an Lae:</strong><br>
-            1. Dúisíonn gach duine - seachas an té a roghnaigh na Sionnaigh, a bheas amach as an gcluiche. (Murar roghnaigh an Ghráinneog an t-imreoir céanna is a roghnaigh na Sionnaigh.)<br>
-            2. Bíonn plé idir na himreoirí ar fad. Cúiseamh, leithscéalta, agus bréaga.<br>
-            3. Scríobhann gach duine síos ainm imreora amháin go bhfuil siad ag iarraidh an ruaig a chur orthu ón bhforaois.<br>
-            4. Nochtar na vótaí, agus bíonn an té leis an líon is mó vótaí amach as an gcluiche.<br>
-            5. Sula n-imíonn siad, insíonn siad don dream eile an Sionnach iad.
+            1. Dúisíonn gach duine - seachas an té a roghnaigh na Sionnaigh.<br>
+            2. Plé idir na himreoirí: cúiseamh, leithscéalta, agus bréaga.<br>
+            3. Scríobhann gach duine ainm imreora amháin chun a chur amach ón bhforaois.<br>
+            4. Nochtar na vótaí; té leis an líon is mó → <span class="highlight">amach as an gcluiche.</span><br>
+            5. Sula n-imíonn siad, insíonn siad an Sionnach iad.
         </div>
     </div>
 </section>
