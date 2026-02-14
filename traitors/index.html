@@ -6,38 +6,17 @@
 <title>Na Sionnaigh – Traitors as Gaeilge</title>
 
 <style>
-footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    background: rgba(0,0,0,0.3);
-    color: #f5f5f5;
-}
-
-.logo-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem; /* space between logos */
-    margin-bottom: 1rem;
-}
-
-.logo-container img {
-    max-height: 50px; /* adjust as needed */
-    width: auto;
-    display: inline-block;
-}
-    
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-    color: #f5f5f5;
+    background: #f5f5f5; /* brighter background */
+    color: #222222;
     line-height: 1.6;
 }
 
 header {
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 2.5rem 1rem;
 }
 
 header h1 {
@@ -45,9 +24,10 @@ header h1 {
     margin-bottom: 0.5rem;
 }
 
-header p {
+header p, header .blurb {
     font-size: 1.2rem;
-    opacity: 0.9;
+    max-width: 700px;
+    margin: 0.5rem auto 1.5rem auto;
 }
 
 section {
@@ -60,10 +40,12 @@ h2 {
     border-bottom: 2px solid #f39c12;
     padding-bottom: 0.5rem;
     margin-top: 2rem;
+    color: #333333;
 }
 
 .card {
-    background: rgba(255,255,255,0.08);
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     padding: 1rem;
     border-radius: 10px;
     margin: 1rem 0;
@@ -75,17 +57,12 @@ h2 {
 }
 
 blockquote {
-    background: rgba(0,0,0,0.4);
+    background: #fff3e0;
     padding: 1rem;
     border-left: 4px solid #f39c12;
     font-style: italic;
 }
 
-footer {
-    text-align: center;
-    padding: 2rem;
-    opacity: 0.7;
-}
 button {
     background: #f39c12;
     border: none;
@@ -93,6 +70,7 @@ button {
     border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
+    margin-top: 0.5rem;
 }
 button:hover {
     background: #e67e22;
@@ -104,17 +82,25 @@ button:hover {
 footer {
     text-align: center;
     padding: 2rem 1rem;
-    background: #ffffff; /* white background */
-    color: #333333;      /* dark text for contrast */
-    border-top: 2px solid #f39c12; /* optional accent line */
+    background: #ffffff;
+    color: #333333;
+    border-top: 2px solid #f39c12;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 1rem;
 }
 
 .logo-container img {
     max-height: 50px;
     width: auto;
     display: inline-block;
-    filter: grayscale(0); /* keeps logos full color */
-}   
+    filter: grayscale(0);
+}
 </style>
 </head>
 
@@ -123,10 +109,21 @@ footer {
 <header>
     <h1>Na Sionnaigh</h1>
     <p>Cluiche “Traitors” as Gaeilge</p>
+    <p class="blurb">
+        Tá pobal soineanta coiníní ina gcónaí san fhoraois — ach i ngan fhios dóibh, tá fealltóirí ina measc.
+        Le titim na hoíche, dúisíonn na Sionnaigh agus roghnaíonn siad íospartach. Faoi sholas an lae,
+        líontar an fhoraois le cúisimh, le leithscéalta, agus le hamhras. Cluiche spleodrach sóisialta trí mheán na Gaeilge é seo,
+        lán le straitéis, mearbhall, agus bréaga beaga bána. Ní bheidh a fhios agat cé atá ar do thaobh… go dtí go mbeidh sé ródhéanach.
+    </p>
 </header>
-    
+
 <section>
     <h2>🎭 Rólanna</h2>
+
+    <div class="card">
+        <strong>🐰 Na Coiníní</strong><br>
+        Gan ról speisialta – ach caithfidh siad na sionnaigh a aimsiú!
+    </div>
 
     <div class="card">
         <strong>🦊 Na Sionnaigh (2–3)</strong><br>
@@ -140,17 +137,12 @@ footer {
 
     <div class="card">
         <strong>🦔 An Gráinneog </strong><br>
-        Is féidir leo duine amháin a chosaint gach oíche.
-    </div>
-
-    <div class="card">
-        <strong>🐰 Na Coiníní</strong><br>
-        Gan ról speisialta – ach caithfidh siad na sionnaigh a aimsiú!
+        Is féidir leo duine amháin a chosaint gach oíche (fiú iad féin).
     </div>
 </section>
 
 <section>
-    <h2>🌙 Titim na hOíche (Script don Scéalaí)</h2>
+    <h2>🌙 Night Phase – Titim na hOíche</h2>
 
     <blockquote>
         "TITEANN AN OÍCHE. TÉANN GACH DUINE INA CHODLADH – DÚNAIGÍ BHUR SÚILE."
@@ -167,24 +159,50 @@ footer {
     <blockquote>
         "DÚISÍONN AN GRAINNEOG. ROGHNAÍONN SIAD DUINE LE COSAINT."
     </blockquote>
+</section>
+
+<section>
+    <h2>☀️ Day Phase – Díospóireacht</h2>
 
     <blockquote>
         "TÁ AN MHAIDIN TAGTHA… ACH AMHÁIN X ATÁ MARAITHE AG NA SIONNAIGH!"
     </blockquote>
-</section>
 
-<section>
-    <h2>🗣 An Díospóireacht</h2>
-    Plé oscailte idir na himreoirí. Cuirtear cúisimh, déantar leithscéalta,
-    agus tar éis ~10 nóiméad déantar vóta rúnda.
+    <p>
+        Plé oscailte idir na himreoirí. Cuirtear cúisimh, déantar leithscéalta,
+        agus tar éis ~10 nóiméad déantar vóta rúnda.
+    </p>
 
     <div class="card">
         An té leis an líon is mó vótaí → <span class="highlight">amach as an gcluiche.</span>
     </div>
 
-    Sula bhfágann siad:
     <div class="card">
-        Insíonn siad an sionnach iad nó nach ea.
+        Sula bhfágann siad: Insíonn siad an sionnach iad nó nach ea.
+    </div>
+</section>
+
+<section>
+    <h2>🎲 Treoir Thapa</h2>
+    <button onclick="toggleRules()">Taispeáin / Folaigh Achoimre</button>
+
+    <div id="quickRules" class="hidden">
+        <div class="card">
+            <strong>Night Phase:</strong><br>
+            1. Everyone closes eyes<br>
+            2. Sionnaigh choose victim<br>
+            3. Ullchabhán checks<br>
+            4. Gráinneog protects someone<br>
+            5. All back to sleep
+            <hr>
+            <strong>Day Phase:</strong><br>
+            1. Morning revealed (who was eliminated)<br>
+            2. Discussion among players<br>
+            3. Accusations and defenses<br>
+            4. Secret vote<br>
+            5. Reveal vote and remove eliminated player<br>
+            6. Repeat night/day until victory
+        </div>
     </div>
 </section>
 
@@ -200,46 +218,19 @@ footer {
     </div>
 </section>
 
-<section>
-    <h2>🎲 Treoir Thapa</h2>
-    <button onclick="toggleRules()">Taispeáin / Folaigh Achoimre</button>
-
-    <div id="quickRules" class="hidden">
-        <div class="card">
-            Oíche → Roghanna rúnda<br>
-            Maidin → Fógra báis<br>
-            Díospóireacht → Vóta<br>
-            Arís… go dtí bua!
-        </div>
-    </div>
-</section>
-
 <footer>
   <div class="logo-container">
-    <a href="https://snag.ie/wp-content/uploads/2026/01/SNAG-Primary-Logo-Full-Colour-2.jpg" target="_blank">
-      <img src="https://snag.ie/wp-content/uploads/2026/01/SNAG-Primary-Logo-Full-Colour-2.jpg" alt="Logo">
-    </a>
-    <a href="https://snag.ie/wp-content/uploads/2025/08/Rialtas_MARKS_Department-of-Rural-and-Community-Development-and-the-Gaeltacht_Std_Colour.png" target="_blank">
-      <img src="https://snag.ie/wp-content/uploads/2025/08/Rialtas_MARKS_Department-of-Rural-and-Community-Development-and-the-Gaeltacht_Std_Colour.png" alt="Logo 2">
-    </a>
-    <a href="https://snag.ie/wp-content/uploads/2026/01/Ciste-Spreagtha-Logo-300x244.jpg" target="_blank">
-      <img src="https://snag.ie/wp-content/uploads/2026/01/Ciste-Spreagtha-Logo-300x244.jpg" alt="Logo 3">
-    </a>
-    <a href="https://snag.ie/wp-content/uploads/2024/04/CnaG-2.png" target="_blank">
-      <img src="https://snag.ie/wp-content/uploads/2024/04/CnaG-2.png" alt="Logo 3">
-    </a>
-
+    <a href="#" target="_blank"><img src="https://snag.ie/wp-content/uploads/2026/01/SNAG-Primary-Logo-Full-Colour-2.jpg" alt="Logo"></a>
+    <a href="#" target="_blank"><img src="https://snag.ie/wp-content/uploads/2025/08/Rialtas_MARKS_Department-of-Rural-and-Community-Development-and-the-Gaeltacht_Std_Colour.png" alt="Logo 2"></a>
+    <a href="#" target="_blank"><img src="https://snag.ie/wp-content/uploads/2026/01/Ciste-Spreagtha-Logo-300x244.jpg" alt="Logo 3"></a>
+    <a href="#" target="_blank"><img src="https://snag.ie/wp-content/uploads/2024/04/CnaG-2.png" alt="Logo 4"></a>
   </div>
 </footer>
 
 <script>
 function toggleRules() {
     var x = document.getElementById("quickRules");
-    if (x.classList.contains("hidden")) {
-        x.classList.remove("hidden");
-    } else {
-        x.classList.add("hidden");
-    }
+    x.classList.toggle("hidden");
 }
 </script>
 
