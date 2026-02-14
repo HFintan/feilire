@@ -5,22 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Na Sionnaigh – Traitors as Gaeilge</title>
 
+<!-- Fancy but readable font for title -->
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
     background: #f5f5f5;
     color: #222222;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 header {
     text-align: center;
-    padding: 2.5rem 1rem;
+    padding: 2rem 1rem;
 }
 
 header h1 {
-    font-family: "Segoe UI", sans-serif; /* simpler, easier-to-read font */
+    font-family: 'UnifrakturCook', cursive; /* slightly fancy title */
     font-size: 3rem;
     margin-bottom: 0.5rem;
 }
@@ -28,11 +31,11 @@ header h1 {
 header p, header .blurb {
     font-size: 1.2rem;
     max-width: 700px;
-    margin: 0.5rem auto 1.5rem auto;
+    margin: 0.5rem auto 1rem auto;
 }
 
 header img {
-    max-width: 90%;
+    max-width: 70%; /* smaller image */
     height: auto;
     margin-top: 1rem;
     border-radius: 12px;
@@ -41,23 +44,23 @@ header img {
 
 section {
     max-width: 900px;
-    margin: auto;
-    padding: 2rem 1rem;
+    margin: 1rem auto; /* reduced gap between sections */
+    padding: 1rem;
 }
 
 h2 {
     border-bottom: 2px solid #f39c12;
     padding-bottom: 0.5rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     color: #333333;
 }
 
 .card {
     background: #ffffff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     padding: 1rem;
     border-radius: 10px;
-    margin: 1rem 0;
+    margin: 0.75rem 0;
 }
 
 .highlight {
@@ -116,61 +119,44 @@ footer {
         Le titim na hoíche, dúisíonn na Sionnaigh agus roghnaíonn siad íospartach. Faoi sholas an lae,
         líontar an fhoraois le cúisimh, le leithscéalta, agus le hamhras...
     </p>
-    <!-- Fixed GitHub image URL -->
+    <p><strong>Marta 6 ó 19:00-22:00 in Áras na nGael, Sráid Dhoiminic, H91 E1NY</strong></p>
     <img src="https://raw.githubusercontent.com/HFintan/feilire/main/traitors2.jpeg" alt="Sionnach i bhfolach i measc coiníní san fhoraois">
 </header>
 
 <section>
     <h2>🎭 Rólanna</h2>
-
-    <div class="card">
-        <strong>🐰 Na Coiníní</strong><br>
-        Gan ról speisialta – ach caithfidh siad na sionnaigh a aimsiú!
-    </div>
-
-    <div class="card">
-        <strong>🦊 Na Sionnaigh (2–3)</strong><br>
-        Déanann siad iarracht gach duine eile a mharú i rith na hoíche.
-    </div>
-
-    <div class="card">
-        <strong>🦉 An tUlchabhán</strong><br>
-        Is féidir leo a fháil amach uair amháin sa bhabhta an sionnach é duine áirithe.
-    </div>
-
-    <div class="card">
-        <strong>🦔 An Gráinneog</strong><br>
-        Is féidir leo duine amháin a chosaint gach oíche (fiú iad féin).
-    </div>
+    <div class="card"><strong>🐰 Na Coiníní</strong><br>Gan ról speisialta – ach caithfidh siad na sionnaigh a aimsiú!</div>
+    <div class="card"><strong>🦊 Na Sionnaigh (2–3)</strong><br>Déanann siad iarracht gach duine eile a mharú i rith na hoíche.</div>
+    <div class="card"><strong>🦉 An tUlchabhán</strong><br>Is féidir leo a fháil amach uair amháin sa bhabhta an sionnach é duine áirithe.</div>
+    <div class="card"><strong>🦔 An Ghráinneog</strong><br>Is féidir leo duine amháin a chosaint gach oíche (fiú iad féin).</div>
 </section>
 
 <section>
     <h2>🎲 Dáileadh</h2>
     <div class="card">
-        Faigheann gach duine cárta a insíonn dóibh cén ról a bheas acu. Babhta beag cur in aithne - líne amháin ó gach duine, msh:
-        <i>"Is mise Áine, is coinín mé, agus is breá liom nóiníní."</i>
-        Ar ndóigh, is féidir bréag a insint...
+        Faigheann gach duine cárta a insíonn dóibh cén ról a bheas acu. Babhta beag cur in aithne - líne amháin ó gach duine: ainm, ról, agus píosa eolais eile.
+        <i>"Is mise Áine, is coinín mé, agus is breá liom nóiníní."</i> Ar ndóigh, is féidir bréag a insint...
     </div>
 </section>
-    
+
 <section>
     <h2>🌙 Oíche</h2>
     <div class="card">
-        Téann gach duine ina gcodhladh.<br>
-        Dúisíonn na Sionnaigh agus roghnaíonn siad íospartach.<br> 
-        Fiosraíonn an tUlchabhán faoi imreoir amháin.<br>
-        Déanann an Ghráinneog iarracht duine éigin a chosaint.<br>
+        1. Téann gach duine ina gcodladh.<br>
+        2. Dúisíonn na Sionnaigh agus roghnaíonn siad íospartach.<br>
+        3. Fiosraíonn an tUlchabhán faoi imreoir amháin.<br>
+        4. Déanann an Ghráinneog iarracht duine éigin a chosaint.
     </div>
 </section>
 
 <section>
     <h2>☀️ Lá</h2>
     <div class="card">
-        Dúisíonn gach duine seachas íospartach na Sionnach.<br>
-        Bíonn plé idir na himreoirí - cúiseamh, leithscéalta, agus bréaga.<br>
-        Scríobhann gach duine síos ainm imreora amháin le cur amach ón bhforaois.<br>
-        Nochtar na vótaí agus cuirtear an ruaig ar an té leis an líon is mó vótaí.<br>
-        Ansin, titeann an oíche arís...
+        1. Dúisíonn gach duine seachas íospartach na Sionnach.<br>
+        2. Plé idir na himreoirí: cúiseamh, leithscéalta, agus bréaga.<br>
+        3. Scríobhann gach duine ainm imreora amháin le cur amach ón bhforaois.<br>
+        4. Nochtar na vótaí; cuirtear an té leis an líon is mó vótaí amach as an gcluiche.<br>
+        5. Ansin, titeann an oíche arís...
     </div>
 </section>
 
@@ -179,12 +165,11 @@ footer {
     <div class="card">
         Tagann deireadh leis an gcluiche nuair nach bhfuil fágtha ach Sionnaigh (bua ag na Sionnaigh), nó nuair atá na Sionnaigh ar fad marbh (bua ag na hainmhithe eile).
     </div>
-</section>    
+</section>
 
 <section>
-    <h2>🎲 Achoimre ghearr ar na tréimhsí oíche agus lae</h2>
+    <h2>🎲 Achoimre ghearr</h2>
     <button onclick="toggleRules()">Taispeáin / Folaigh Achoimre</button>
-
     <div id="quickRules" class="hidden">
         <div class="card">
             <strong>Le Linn na hOíche:</strong><br>
@@ -203,11 +188,27 @@ footer {
             1. Dúisíonn gach duine - seachas an té a roghnaigh na Sionnaigh.<br>
             2. Plé idir na himreoirí: cúiseamh, leithscéalta, agus bréaga.<br>
             3. Scríobhann gach duine ainm imreora amháin chun a chur amach ón bhforaois.<br>
-            4. Nochtar na vótaí, ansin tá an té leis an líon is mó vótaí amach as an gcluiche.<br>
+            4. Nochtar na vótaí; cuirtear an té leis an líon is mó vótaí amach as an gcluiche.<br>
             5. Sula n-imíonn siad, insíonn siad an Sionnach iad.
         </div>
     </div>
 </section>
+
+<!--<section>
+    <h2>❓ Fiosrúcháin Damanta</h2>
+    <div class="card">
+        <strong>C1:</strong> Mura bhféidir leat labhairt, conas a n-insítear cén d  <br>
+        <em>Ar ndóigh, caithfear fanacht i do thost le linn na hoíche, ionas nach mbeidh a fhios ag na himreoirí eile cén ról a bhfuil agat.</em>
+    </div>
+    <div class="card">
+        <strong>C2:</strong> An féidir an cluiche a imirt gan na rólanna speisialta?<br>
+        <em>Sea, ach bíonn sé níos spraíúla le gach ról sa cluiche.</em>
+    </div>
+    <div class="card">
+        <strong>C3:</strong> Cé chomh fada a mhaireann babhta amháin?</strong><br>
+        <em>Thart ar 10–15 nóiméad do bhabhta iomlán (oíche + lá).</em>
+    </div>
+</section>-->
 
 <footer>
   <div class="logo-container">
@@ -220,8 +221,7 @@ footer {
 
 <script>
 function toggleRules() {
-    var x = document.getElementById("quickRules");
-    x.classList.toggle("hidden");
+    document.getElementById("quickRules").classList.toggle("hidden");
 }
 </script>
 
