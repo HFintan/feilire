@@ -32,8 +32,9 @@ header p, header .blurb {
     margin: 0.5rem auto 1rem auto;
 }
 
-header img {
-    max-width: 70%; /* smaller image */
+.main-image {
+    max-width: 400px;
+    width: 100%;
     height: auto;
     margin-top: 1rem;
     border-radius: 12px;
@@ -130,6 +131,20 @@ footer {
     max-height: 70px;
     width: auto;
 }
+
+    .header-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;   /* makes it responsive */
+    margin-top: 1.5rem;
+}
+
+.header-logos img {
+    max-height: 55px;
+    width: auto;
+}
 </style>
 </head>
 
@@ -144,21 +159,13 @@ footer {
         líontar an fhoraois le cúisimh, le leithscéalta, agus le hamhras...
     </p>
     <p><strong>Márta 6ú ó 18:00-22:00 in Áras na nGael, Sráid Dhoiminic, H91 E1NY</strong></p>
-    <img src="https://raw.githubusercontent.com/HFintan/feilire/main/traitors2.jpeg" alt="Sionnach i bhfolach i measc coiníní san fhoraois" width="400">
-    <div class="hero-row">
-    
-    <div class="side-logos">
-        <img src="https://snag.ie/wp-content/uploads/2026/01/SNAG-Primary-Logo-Full-Colour-2.jpg" alt="Logo 1">
-        <img src="https://snag.ie/wp-content/uploads/2025/08/Rialtas_MARKS_Department-of-Rural-and-Community-Development-and-the-Gaeltacht_Std_Colour.png" alt="Logo 2">
-    </div>
-
-    <img class="main-image" src="https://raw.githubusercontent.com/HFintan/feilire/main/traitors2.jpeg" alt="Sionnach i bhfolach i measc coiníní san fhoraois">
-
-    <div class="side-logos">
-        <img src="https://snag.ie/wp-content/uploads/2026/01/Ciste-Spreagtha-Logo-300x244.jpg" alt="Logo 3">
-        <img src="https://snag.ie/wp-content/uploads/2024/04/CnaG-2.png" alt="Logo 4">
-    </div>
-
+    <img class="main-image" src="https://raw.githubusercontent.com/HFintan/feilire/main/traitors2.jpeg" alt="Sionnach i bhfolach i measc coiníní san fhoraois" width="400">
+<div class="header-logos">
+    <img src="https://snag.ie/wp-content/uploads/2026/01/SNAG-Primary-Logo-Full-Colour-2.jpg" alt="Logo 1">
+    <img src="https://snag.ie/wp-content/uploads/2025/08/Rialtas_MARKS_Department-of-Rural-and-Community-Development-and-the-Gaeltacht_Std_Colour.png" alt="Logo 2">
+    <img src="https://snag.ie/wp-content/uploads/2026/01/Ciste-Spreagtha-Logo-300x244.jpg" alt="Logo 3">
+    <img src="https://snag.ie/wp-content/uploads/2024/04/CnaG-2.png" alt="Logo 4">
+</div>
 </div>
 </header>
 
