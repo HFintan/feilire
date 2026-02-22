@@ -104,6 +104,32 @@ footer {
     display: inline-block;
     filter: grayscale(0);
 }
+.hero-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap; /* keeps it responsive */
+}
+
+.main-image {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.side-logos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.side-logos img {
+    max-height: 70px;
+    width: auto;
+}
 </style>
 </head>
 
@@ -111,7 +137,7 @@ footer {
 
 <header>
     <h1>Na Sionnaigh</h1>
-    <p><i>Cluiche “Traitors” as Gaeilge á óstáil ag Na Cabairí</i>
+    <p><i>Cluiche “Traitors” as Gaeilge á óstáil ag Na Cabairí</i></p>
     <p class="blurb">
         Tá pobal soineanta coiníní ina gcónaí san fhoraois - ach i ngan fhios dóibh, tá fealltóirí ina measc.
         Le titim na hoíche, dúisíonn na Sionnaigh agus roghnaíonn siad íospartach. Faoi sholas an lae,
@@ -119,6 +145,21 @@ footer {
     </p>
     <p><strong>Márta 6ú ó 18:00-22:00 in Áras na nGael, Sráid Dhoiminic, H91 E1NY</strong></p>
     <img src="https://raw.githubusercontent.com/HFintan/feilire/main/traitors2.jpeg" alt="Sionnach i bhfolach i measc coiníní san fhoraois" width="400">
+    <div class="hero-row">
+    
+    <div class="side-logos">
+        <img src="https://snag.ie/wp-content/uploads/2026/01/SNAG-Primary-Logo-Full-Colour-2.jpg" alt="Logo 1">
+        <img src="https://snag.ie/wp-content/uploads/2025/08/Rialtas_MARKS_Department-of-Rural-and-Community-Development-and-the-Gaeltacht_Std_Colour.png" alt="Logo 2">
+    </div>
+
+    <img class="main-image" src="https://raw.githubusercontent.com/HFintan/feilire/main/traitors2.jpeg" alt="Sionnach i bhfolach i measc coiníní san fhoraois">
+
+    <div class="side-logos">
+        <img src="https://snag.ie/wp-content/uploads/2026/01/Ciste-Spreagtha-Logo-300x244.jpg" alt="Logo 3">
+        <img src="https://snag.ie/wp-content/uploads/2024/04/CnaG-2.png" alt="Logo 4">
+    </div>
+
+</div>
 </header>
 
 <section>
