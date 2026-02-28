@@ -158,7 +158,7 @@ footer {
         Le titim na hoíche, dúisíonn na Sionnaigh agus roghnaíonn siad a mbéile. Faoi sholas an lae,
         líontar an fhoraois le milleán, le leithscéalta, agus le hamhras...
     </p>
-    <p><strong>Márta 6ú ó 18:00-22:00 in Áras na nGael, Sráid Dhoiminic, Gaillimh H91 E1NY</strong></p>
+    <p><strong>Márta 6ú ó 18:00-22:00 in Áras na nGael, Sráid Dhoiminic, Gaillimh H91E1NY</strong></p>
     <p><strong>NB: Ní mhaireann na cluichí ach thart ar leath-uair - ní gá fanacht ann don oíche ar fad! (Cé go mbeidh lán-fáilte romhat, ar ndóigh.)</strong></p>
     <p>Líon teoranta spásanna - Cláraigí thíos!</p>
     <p><strong>Fáilte roimh chuile leibhéal Gaeilge - beidh cluichí ag bonnleibhéal, meánleibhéal, agus ardleibhéal.</strong></p>
@@ -218,6 +218,14 @@ footer {
     <div class="card">
         Tagann deireadh leis an gcluiche nuair nach bhfuil fágtha ach Sionnaigh (bua ag na Sionnaigh), nó nuair atá na Sionnaigh ar fad marbh (bua ag na hainmhithe eile).
     </div>
+</section>
+    
+<section>
+    <p style="text-align: center;">
+<br><br>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfiDvNJG2dDp2mpHyZZ4qFZLR2GWwftWlQmlXCpLizApkDb6w/viewform?embedded=true" width="640" height="1679" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <br><br>
+        <p>
 </section>
 
 <section>
@@ -301,13 +309,22 @@ footer {
 </section>
 
 <section>
-    <p style="text-align: center;">
-<br><br>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfiDvNJG2dDp2mpHyZZ4qFZLR2GWwftWlQmlXCpLizApkDb6w/viewform?embedded=true" width="640" height="1679" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    <br><br>
-        <p>
-</section>
+    <section>
+    <h2>📖 Foclóir Úsáideach</h2>
+    <button onclick="toggleGlossary()">Taispeáin / Folaigh Foclóir</button>
 
+    <div id="glossary" class="hidden">
+        <div class="card">
+            <strong>Ní mise an sionnach!</strong><br>
+            <em>I am not the fox!</em>
+        </div>
+        <div class="card">
+            <strong>Cén fáth ar roghnaigh tú ___?</strong><br>
+            <em>Why did you choose ___?</em>
+        </div>
+    </div>
+</section>
+</section>
     
 <footer>
   <div class="logo-container">
@@ -321,6 +338,10 @@ footer {
 <script>
 function toggleRules() {
     document.getElementById("quickRules").classList.toggle("hidden");
+}
+
+function toggleGlossary() {
+    document.getElementById("glossary").classList.toggle("hidden");
 }
 </script>
 
